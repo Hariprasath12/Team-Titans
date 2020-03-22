@@ -28,10 +28,10 @@ app.get('/', function (req, res) {
     res.render('self',{layout: false})
   })
   app.get('/shared-vehicle', function (req, res) {
-    res.render('shared-vehicle',{layout: false})
+    res.render('sharedVehicle',{layout: false})
   })
   app.get('/public-transport', function (req, res) {
-    res.render('public-transport',{layout: false})
+    res.render('publicTransport',{layout: false})
   })
   app.get('/map', function (req, res) {
     res.render('map',{layout: false})
