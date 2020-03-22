@@ -27,11 +27,11 @@ app.get('/', function (req, res) {
   app.get('/self', function (req, res) {
     res.render('self',{layout: false})
   })
-  app.get('/pool', function (req, res) {
-    res.render('pool',{layout: false})
+  app.get('/shared-vehicle', function (req, res) {
+    res.render('shared-vehicle',{layout: false})
   })
-  app.get('/public', function (req, res) {
-    res.render('public',{layout: false})
+  app.get('/public-transport', function (req, res) {
+    res.render('public-transport',{layout: false})
   })
   app.get('/map', function (req, res) {
     res.render('map',{layout: false})

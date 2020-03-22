@@ -1,3 +1,260 @@
-body{
-    background: #000;
+@import "reset.css";
+
+html, 
+body {
+    height: 100%;
+}
+
+h1 {
+	font-size: 24px;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+h3 {
+	font-size: 18px;
+}
+
+.container {
+	width: 375px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+#header {
+	.top-nav {
+		border-bottom: 1px solid;
+		padding: 10px 0;
+		height: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		#toggle-nav-menu {
+			display: block;
+		    width: 32px;
+		    z-index: 99;
+		    position: absolute;
+		    left: 0;
+		    span.line {
+		    	display: block;
+			    width: 26px;
+			    height: 2px;
+			    background: #000;
+			    border-radius: 1px;
+			    margin-bottom: 5px;
+			    transform: translate(0, 0);
+			    -webkit-transform: translate(0, 0);
+			    -ms-transform: translate(0, 0);
+		    }
+		    span.line-3 {
+		    	margin: 0;
+		    }
+		}
+
+		h1 {
+			color: #008000;
+		}
+	}
+}
+
+#navigation {
+	display: none;
+    width: 200px;
+    height: 100%;
+    padding: 10px;
+    position: fixed;
+    top: 52px;
+    background: #fff;
+    border-right: 1px solid #000;
+    z-index: 99999;
+    overflow: hidden;
+    
+    &.active {
+    	display: block;
+    }
+
+    > div {
+    	padding: 10px 0;
+    }
+
+    .profile-image-and-name {
+    	display: flex;
+    	align-items: center;
+    	.image {
+    		width: 50px;
+    		height: 50px;
+    		border: 1px solid #000;
+    		border-radius: 50%;
+    		display: flex;
+    		align-items: center;
+    		justify-content: center;
+    		padding: 10px;
+    		margin-right: 10px;
+    		.fa {
+    			color: #000;
+    		}
+    	}
+    	h3 {
+    		color: #000;
+    		font-size: 16px;
+    	}
+    }
+
+    .leaf-points {
+    	display: flex;
+    	.points {
+    		width: 50%;
+    		display: flex;
+    		justify-content: space-evenly;
+
+    		&.leaf {
+    			border-right: 1px solid #000;
+    		}
+
+    		.fa {
+    			color: #008000;
+    		}
+    	}
+    }
+
+    .menu-items {
+    	li {
+    		a {
+    			display: block;
+    			color: #000;
+    			font-size: 18px;
+    			padding: 10px 5px;
+    			text-decoration: none;
+
+    			&:hover {
+    				background: #ddd;
+    			}
+    		}
+
+    		&:nth-last-child(1) {
+    			border-bottom: 0;
+    		}
+    	}
+    }
+}
+
+#content {
+	width: 100%;
+	height: 100%;
+	.container {
+		position: relative;
+	}
+	#carbon-saved-stats {
+		height: 70%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid;
+		border-bottom-left-radius: 20px;
+		border-bottom-right-radius: 20px;
+		.stats {
+			width: 150px;
+			height: 150px;
+			border: 5px solid #008000;
+			border-radius: 50%;
+			opacity: 0.8;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+
+			.icon {
+				position: relative;
+
+				h2 {
+					position: absolute;
+				    left: 0;
+				    right: 0;
+				    top: 0;
+				    bottom: 0;
+				    line-height: 80px;
+				    text-align: center;
+				}
+			}
+
+			.fa {
+				color: #aaa;
+			}
+
+			h3 {
+				color: #008000;
+				text-align: center;
+			}
+		}
+	}
+	.commute-options-container {
+		background-color: #D5E8D4;
+		position: absolute;
+		bottom: 0;
+		border: 1px solid #D5E8D4;
+		width: 100%;
+		height: 30%;
+		border-top-left-radius: 20px;
+		border-top-right-radius: 20px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		.commute-options {
+			bottom: 10px;
+			width: 100%;
+			display: flex;
+			justify-content: space-evenly;
+			.commute-option {
+				a {
+					display: block;
+					text-align: center;
+					text-decoration: none;
+				}
+				.icon {
+					width: 80px;
+					height: 80px;
+					border: 1px solid #000;
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding: 10px;
+					margin-bottom: 10px;
+					.fa {
+						color: #000;
+					}
+				}
+				h3 {
+					color: #000;
+					font-size: 16px;
+				}
+			}
+		}
+	}
+}
+
+#footer {
+	.bottom-nav {
+		border-top: 1px solid;
+		padding: 10px 0;
+		display: flex;
+		justify-content: space-around;
+
+		.fa-home {
+			color: 	#FF0000;
+		}
+
+		.fa-tree {
+			color: #008000;
+		}
+
+		.fa-user-circle-o {
+			color: #0000FF;
+
+		}
+	}
 }

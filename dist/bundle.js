@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("console.log(\"hello\");\n\n//# sourceURL=webpack:///./js/index.js?");
+eval("let toggleNavMenu = document.getElementById(\"toggle-nav-menu\");\nlet navigation = document.getElementById(\"navigation\");\n\ntoggleNavMenu.addEventListener('click', function(e) {\n\tnavigation.classList.toggle('active');\n\te.preventDefault();\n});\n\n//# sourceURL=webpack:///./js/index.js?");
 
 /***/ }),
 
