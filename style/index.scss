@@ -258,3 +258,87 @@ h3 {
 		}
 	}
 }
+
+.map-container {
+	height: 60%;
+}
+
+.journey-and-travel-modes {
+	height: calc(40% - 20px);
+}
+
+.journey-and-travel-modes {
+	padding: 10px;
+	background: #D5E8D4;
+	display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border: 1px solid #D5E8D4;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+
+    h2 {
+    	text-align: center;
+    }
+
+	form {
+		padding: 10px;
+		input {
+			width: 98%;
+			height: 20px;
+			padding: 5px;
+			border: 1px solid #008000;
+			border-radius: 5px;
+			margin-bottom: 10px;
+
+			&:nth-last-child(1) {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.travel-modes {
+		overflow: hidden;
+		.travel-mode {
+			width: 50%;
+			float: left;
+			padding: 5px 0;
+			display: flex;
+			justify-content: center;
+
+			.icon {
+				width: 30px;
+				height: 30px;
+				border: 1px solid #000;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 10px;
+				margin-right: 10px;
+				.fa {
+					color: #000;
+				}
+			}
+
+			.details {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+
+				> div {
+					width: 100%;
+				}
+
+				.fa-leaf {
+					color: #008000;
+				}
+
+				.fa-cloud {
+					color: #aaa;
+				}
+			}
+		}
+	}
+}
+

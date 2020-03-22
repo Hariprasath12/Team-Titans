@@ -608,3 +608,102 @@ h3 {
     color: #008000; }
   #footer .bottom-nav .fa-user-circle-o {
     color: #0000FF; }
+
+.map-container {
+  height: 60%; }
+
+.journey-and-travel-modes {
+  height: -webkit-calc(40% - 20px);
+  height: calc(40% - 20px); }
+
+.journey-and-travel-modes {
+  padding: 10px;
+  background: #D5E8D4;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  border: 1px solid #D5E8D4;
+  -webkit-border-top-left-radius: 20px;
+  border-top-left-radius: 20px;
+  -webkit-border-top-right-radius: 20px;
+  border-top-right-radius: 20px; }
+  .journey-and-travel-modes h2 {
+    text-align: center; }
+  .journey-and-travel-modes form {
+    padding: 10px; }
+    .journey-and-travel-modes form input {
+      width: 98%;
+      height: 20px;
+      padding: 5px;
+      border: 1px solid #008000;
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      margin-bottom: 10px; }
+      .journey-and-travel-modes form input:nth-last-child(1) {
+        margin-bottom: 0; }
+  .journey-and-travel-modes .travel-modes {
+    overflow: hidden; }
+    .journey-and-travel-modes .travel-modes .travel-mode {
+      width: 50%;
+      float: left;
+      padding: 5px 0;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center; }
+      .journey-and-travel-modes .travel-modes .travel-mode .icon {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #000;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        padding: 10px;
+        margin-right: 10px; }
+        .journey-and-travel-modes .travel-modes .travel-mode .icon .fa {
+          color: #000; }
+      .journey-and-travel-modes .travel-modes .travel-mode .details {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center; }
+        .journey-and-travel-modes .travel-modes .travel-mode .details > div {
+          width: 100%; }
+        .journey-and-travel-modes .travel-modes .travel-mode .details .fa-leaf {
+          color: #008000; }
+        .journey-and-travel-modes .travel-modes .travel-mode .details .fa-cloud {
+          color: #aaa; }
