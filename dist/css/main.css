@@ -611,6 +611,9 @@ h3 {
 
 .map-container {
   height: 60%; }
+  .map-container #map,
+  .map-container #map-canvas {
+    height: 100% !important; }
 
 .journey-and-travel-modes {
   height: -webkit-calc(40% - 20px);
@@ -664,7 +667,8 @@ h3 {
       -webkit-box-pack: center;
       -webkit-justify-content: center;
       -ms-flex-pack: center;
-      justify-content: center; }
+      justify-content: center;
+      cursor: pointer; }
       .journey-and-travel-modes .travel-modes .travel-mode .icon {
         width: 30px;
         height: 30px;
@@ -707,3 +711,40 @@ h3 {
           color: #008000; }
         .journey-and-travel-modes .travel-modes .travel-mode .details .fa-cloud {
           color: #aaa; }
+
+.commute-results-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+  .commute-results-container .commute-results {
+    width: 75%;
+    background: #D5E8D4;
+    padding: 10px;
+    border: 1px solid #D5E8D4;
+    -webkit-border-radius: 10px;
+    border-radius: 10px; }
+    .commute-results-container .commute-results h3 {
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 10px; }
+    .commute-results-container .commute-results > div {
+      padding: 5px; }

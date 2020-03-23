@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	  {{> head title="Carbon Footprint - Self Transport"}}
-	  		
+	  {{> head title="Carbon Footprint - Self Transport"}}	  		
 	</head>
 	<body>
 		<div id="header">
@@ -14,104 +13,114 @@
 		<div id="footer">
 			{{> bottomNav}}
 		</div>
-<script src="./dist/bundle.js"></script>
-<script>
-	let car='car';
-	let bike='motorcycle';
-	let cycle='cycle';
-	let walk='walk';
-let totaldistance=0;
-	
+  <script src="./dist/bundle.js"></script>
+  <script>
+    	let car='car';
+    	let bike='motorcycle';
+    	let cycle='cycle';
+    	let walk='walk';
+      let totaldistance=0;
+    	
+      let commute = JSON.parse(localStorage.getItem("commute"));
 
-	function mapInit() {
-    // console.log('map');
-    var directionsService = new google.maps.DirectionsService();
-    var directionsRenderer = new google.maps.DirectionsRenderer();
-    var map = new google.maps.Map(document.getElementById('map-canvas'), {
-      zoom: 7,
-      center: {lat: 41.85, lng: -87.65}
-    });
-    directionsRenderer.setMap(map);
-
-    var onChangeHandler = function() {
-		document.getElementById(walk).style.backgroundColor="#b3d4fc";
-		document.getElementById(car).style.backgroundColor="#b3d4fc";
-		document.getElementById(cycle).style.backgroundColor="#b3d4fc";
-		document.getElementById(bike).style.backgroundColor="#b3d4fc";
-      calculateAndDisplayRoute(directionsService, directionsRenderer);
-    };
-    document.getElementById('source').addEventListener('change', onChangeHandler);
-    document.getElementById('destination').addEventListener('change', onChangeHandler);
-  }
-function updateUI(distance){
-console.log(distance)
-     let dis=distance.split(' ');
-	 distance=Number(dis[0]);
-	  totaldistance=Number(dis[0]);
-	 console.log(totaldistance)
-	if(distance<=1){
-    document.getElementById(walk).style.backgroundColor="#1aff1a";
-	}else if(distance>1 && distance<= 5){
-    document.getElementById(cycle).style.backgroundColor="#1aff1a";
-	}else if(distance>5 && distance <=15){
-    document.getElementById(bike).style.backgroundColor="#1aff1a";
-	}else if(distance > 15){
-    document.getElementById(car).style.backgroundColor="#1aff1a";
-	}
-}
-  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-	  
-    directionsService.route(
-        {
-          origin: {query: document.getElementById('source').value},
-          destination: {query: document.getElementById('destination').value},
-          travelMode: 'DRIVING'
-        },
-        function(response, status) {
-          if (status === 'OK') {
-            directionsRenderer.setDirections(response);
-			console.log(response.routes[0].legs[0])
-		
-			updateUI(response.routes[0].legs[0].distance.text)
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
+    	function mapInit() {
+        // console.log('map');
+        var directionsService = new google.maps.DirectionsService();
+        var directionsRenderer = new google.maps.DirectionsRenderer();
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+          zoom: 7,
+          center: {lat: 41.85, lng: -87.65}
         });
-  }
-function startRide(ride){
-if(ride=='car'){
-  var txt;
-  var person = prompt("How many are Travelling:", "3");
-  if (person == null || person == "") {
-    txt = "User cancelled the prompt.";
-  } else {
-    console.log(person);
-	let count=person;
-	let url=`${window.location.origin}/map?start=${document.getElementById('source').value}&end=${document.getElementById('destination').value}&count=${count}&ride=${ride}&dis=${totaldistance}`
-	window.location.replace(url);
+        directionsRenderer.setMap(map);
 
-  }
-}else if(ride=='bike'){
-  var txt;
-  var person = prompt("How many are Travelling:", "3");
-  if (person == null || person == "") {
-    txt = "User cancelled the prompt.";
-  } else {
-	let count=person;
-	let url=`${window.location.origin}/map?start=${document.getElementById('source').value}&end=${document.getElementById('destination').value}&count=${count}&ride=${ride}&dis=${totaldistance}`
-	window.location.replace(url);  }
-}else{
-	let count=0;
-	let url=`${window.location.origin}/map?start=${document.getElementById('source').value}&end=${document.getElementById('destination').value}&count=${count}&ride=${ride}&dis=${totaldistance}`
-	window.location.replace(url);  
-}
-}
+        var onChangeHandler = function() {
+      		document.getElementById(walk).style.backgroundColor="#b3d4fc";
+      		document.getElementById(car).style.backgroundColor="#b3d4fc";
+      		document.getElementById(cycle).style.backgroundColor="#b3d4fc";
+      		document.getElementById(bike).style.backgroundColor="#b3d4fc";
+          calculateAndDisplayRoute(directionsService, directionsRenderer);
+        };
+        document.getElementById('source').addEventListener('change', onChangeHandler);
+        document.getElementById('destination').addEventListener('change', onChangeHandler);
+      }
 
+      function updateUI(distance){
+          commute.transit = "self";
+          console.log(distance)
+          let dis=distance.split(' ');
+      	  distance=Number(dis[0]);
+      	  totaldistance=Number(dis[0]);
+      	  console.log(totaldistance);
+          commute.distance = distance;
 
+      	  if(distance<=1){
+            document.getElementById(walk).style.backgroundColor="#1aff1a";
+      	  }else if(distance>1 && distance<= 5){
+            document.getElementById(cycle).style.backgroundColor="#1aff1a";
+      	  }else if(distance>5 && distance <=15){
+            document.getElementById(bike).style.backgroundColor="#1aff1a";
+      	  }else if(distance > 15){
+            document.getElementById(car).style.backgroundColor="#1aff1a";
+         }
+      }
 
-</script>
-		    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnPKOObu8W8kngc9yiYesWpY4UHplvLao&callback=mapInit">
+      function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        commute.start = document.getElementById('source').value;
+        commute.end = document.getElementById('destination').value;
+        directionsService.route(
+            {
+              origin: {query: document.getElementById('source').value},
+              destination: {query: document.getElementById('destination').value},
+              travelMode: 'DRIVING'
+            },
+            function(response, status) {
+              if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+    			      console.log(response.routes[0].legs[0])
+    		
+    			     updateUI(response.routes[0].legs[0].distance.text)
+              } else {
+                window.alert('Directions request failed due to ' + status);
+              }
+            });
+      }
+    function startRide(ride){
+      commute.ride = ride;
+      if(ride=='car') {
+        var txt;
+        var person = prompt("How many are Travelling:", "3");
+        if (person == null || person == "") {
+          txt = "User cancelled the prompt.";
+        } else {
+          console.log(person);
+        	let count=person;
+          commute.count = person;
+          localStorage.setItem("commute", JSON.stringify(commute));
+        	let url=window.location.origin + "/map";
+        	window.location.replace(url);
+
+          }
+      } else if(ride=='bike') {
+        var txt;
+        var person = prompt("How many are Travelling:", "3");
+        if (person == null || person == "") {
+          txt = "User cancelled the prompt.";
+        } else {
+      	let count=person;
+        commute.count = person;
+        localStorage.setItem("commute", JSON.stringify(commute));
+      	let url=window.location.origin + "/map";
+      	window.location.replace(url);  }
+      } else{
+      	let count=0;
+        commute.count = 0;
+        localStorage.setItem("commute", JSON.stringify(commute));
+      	let url=window.location.origin + "/map";
+      	window.location.replace(url);  
+      }
+    }
+
     </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnPKOObu8W8kngc9yiYesWpY4UHplvLao&callback=mapInit"></script>
 	</body>
 </html
