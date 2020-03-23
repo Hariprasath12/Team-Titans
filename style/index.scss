@@ -305,11 +305,10 @@ h3 {
 	.travel-modes {
 		overflow: hidden;
 		.travel-mode {
-			width: 50%;
+			width: 46%;
 			float: left;
-			padding: 5px 0;
+			padding: 2%;
 			display: flex;
-			justify-content: center;
 			cursor: pointer;
 
 			.icon {

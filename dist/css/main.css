@@ -657,17 +657,13 @@ h3 {
   .journey-and-travel-modes .travel-modes {
     overflow: hidden; }
     .journey-and-travel-modes .travel-modes .travel-mode {
-      width: 50%;
+      width: 46%;
       float: left;
-      padding: 5px 0;
+      padding: 2%;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
-      -webkit-box-pack: center;
-      -webkit-justify-content: center;
-      -ms-flex-pack: center;
-      justify-content: center;
       cursor: pointer; }
       .journey-and-travel-modes .travel-modes .travel-mode .icon {
         width: 30px;
