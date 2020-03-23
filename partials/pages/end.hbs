@@ -100,10 +100,10 @@
 	        		mileage = 20;
 	        		leafPoints = 10;
 	        	} else if(ride == "bus") {
-	        		mileage = 20;
+	        		mileage = 5;
 	        		leafPoints = 15;
 	        	} else if(ride == "train") {
-	        		mileage = 100;
+	        		mileage = 5;
 	        		leafPoints = 20;
 	        	} else {
 	        		leafPoints = 25;
@@ -111,7 +111,11 @@
 
 	        	
 	        	let totalOccupants = commute.count;
-	        	let carbonEmittedPerLitre = 2.31;
+	        	if(ride == "bike") {
+	        		let carbonEmittedPerLitre = 2.31;
+	        	} else {
+	        		let carbonEmittedPerLitre = 2.68;
+	        	}
 
 	        	let fuelRequiredPerPerson = (dis/mileage);
 	        	let totalFuelRequired = ((dis/mileage)/totalOccupants);
@@ -120,7 +124,7 @@
 	        	let totalCarbonEmission;
 	        	let carbonSaved;
 
-	        	console.log(carbonEmissionPerPerson);
+	        	// console.log(carbonEmissionPerPerson);
 
 	        	if(ride == "walk" || ride == "cycle") {
 	        		carbonSaved = carbonEmittedPerLitre;

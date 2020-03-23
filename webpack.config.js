@@ -4,7 +4,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractCssPlugin = new ExtractTextPlugin('css/[name].css');
 const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 
-
 module.exports = {
 
 

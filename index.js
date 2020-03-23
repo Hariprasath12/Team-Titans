@@ -2,8 +2,16 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const compression = require('compression');
 const app     = express();
+var path = require('path');
+const imgDir = path.join(__dirname, 'img');
+
+app.use(express.static(imgDir));
+
+
 app.set('view engine', 'hbs');
 app.set('views', './partials');
+
+
 
 let hbs = exphbs.create({
     extname: '.hbs', 
@@ -41,6 +49,9 @@ app.get('/', function (req, res) {
   })
   app.get('/profile', function (req, res) {
     res.render('profile',{layout: false})
+  })
+  app.get('/report', function (req, res) {
+    res.render('report',{layout: false})
   })
   
 console.log('Magic happens on port 3000');

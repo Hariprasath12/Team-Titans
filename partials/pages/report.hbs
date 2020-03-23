@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{{> head title="Carbon Footprint - Reports"}}
+	</head>
+	<body>
+		<div id="header">
+			{{> topNav}}
+		</div>
+		<div id="content">
+		  	<div class="container">
+		  		<div class="points-container">
+		  			<h1>Points Stats</h1>
+			  		<div class="leaf-points">
+			  			<div class="points leaf">
+			  				<span class="label">1500</span><i class="fa fa-2x fa-leaf" aria-hidden="true"></i>
+			  			</div>
+			  			<div class="points tree">
+			  				<span class="label">1</span><i class="fa fa-2x fa-tree" aria-hidden="true"></i>
+			  			</div>
+			  		</div>
+			  		<hr/>
+			  		<div class="tree-container">
+			  			<h2>You can convert your points to a Tree</h2>
+			  			<video autoplay muted loop playsinline>
+			  				<source src="tree.mp4" type="video/mp4">
+			  			</video>
+			  		</div>
+			  	</div>
+		  	</div>
+		</div>
+		<div id="footer">
+			{{> bottomNav}}
+		</div>
+		<script src="./dist/bundle.js"></script>
+		<script type="text/javascript">
+			localStorage.setItem("commute", "{}");
+		</script>
+	</body>
+</html>
