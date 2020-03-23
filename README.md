@@ -18,14 +18,15 @@ My Tanso prototype uses the below default values for its Carbon emission/savings
 #### Rewards:
 
 1. The user gets 4 leafs per KM travelled.
-2. The user gets 
-⋅⋅* 25X leafs/km on commute by walk.
-⋅⋅* 25X leafs/km on commute by bicycle.
-⋅⋅* 15X leafs/km on commute by bike.
-⋅⋅* 10X leafs/km on shared commute by car,
-⋅⋅* 15X leafs/km on public commute by bus,
-⋅⋅* 20X leafs/km on public commute by train.
-⋅⋅* The user can convert 1000 leafs collected to create a tree.
+2. The user gets:
+
+* 25X leafs/km on commute by walk.
+* 25X leafs/km on commute by bicycle.
+* 15X leafs/km on commute by bike.
+* 10X leafs/km on shared commute by car,
+* 15X leafs/km on public commute by bus,
+* 20X leafs/km on public commute by train.
+* The user can convert 1000 leafs collected to create a tree.
 
 #### Example:
 
