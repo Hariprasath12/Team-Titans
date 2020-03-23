@@ -14,7 +14,7 @@
 		</form>
 		<div class="travel-modes">
 			{{#if self}}
-				<div class="travel-mode walk">
+				<div class="travel-mode walk" id="walk">
 					<div class="icon">
 						<i class="fa fa-2x fa-male" aria-hidden="true"></i>
 					</div>
@@ -23,7 +23,7 @@
 						<div><i class="fa fa-cloud" aria-hidden="true"></i> x 0.5 kg/km</div>
 					</div>
 				</div>
-				<div class="travel-mode cycle">
+				<div class="travel-mode cycle" id="cycle">
 					<div class="icon">
 						<i class="fa fa-2x fa-bicycle" aria-hidden="true"></i>
 					</div>
@@ -34,7 +34,7 @@
 				</div>
 			{{/if}}
 			{{#if shared}}
-				<div class="travel-mode motorcycle">
+				<div class="travel-mode motorcycle" id="motorcycle">
 					<div class="icon">
 						<i class="fa fa-2x fa-motorcycle" aria-hidden="true"></i>
 					</div>
@@ -43,7 +43,7 @@
 						<div><i class="fa fa-cloud" aria-hidden="true"></i> x 0.5 kg/km</div>
 					</div>
 				</div>
-				<div class="travel-mode car">
+				<div class="travel-mode car" id="car">
 					<div class="icon">
 						<i class="fa fa-2x fa-car" aria-hidden="true"></i>
 					</div>
@@ -54,7 +54,7 @@
 				</div>
 			{{/if}}
 			{{#if public}}
-				<div class="travel-mode bus">
+				<div class="travel-mode bus" id="bus">
 					<div class="icon">
 						<i class="fa fa-2x fa-bus" aria-hidden="true"></i>
 					</div>
@@ -63,7 +63,7 @@
 						<div><i class="fa fa-cloud" aria-hidden="true"></i> x 0.5 kg/km</div>
 					</div>
 				</div>
-				<div class="travel-mode train">
+				<div class="travel-mode train" id="train">
 					<div class="icon">
 						<i class="fa fa-2x fa-train" aria-hidden="true"></i>
 					</div>
