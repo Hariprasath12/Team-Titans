@@ -27,7 +27,12 @@
 					  	</div>
 						<div id="to">
 						</div>
-						<div id="carbon">
+						<div id="carbon-emitted">
+						</div>
+						<div id="carbon-saved">
+						</div>
+						<div id="leaf-points">
+							
 						</div>
 					</div>
 				</div>
@@ -66,37 +71,90 @@
 		      document.body.addEventListener('load', onChangeHandler);
 		    }
 
-	          function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-	    		    directionsService.route(
-	                {
-	                  origin: {query: from},
-	                  destination: {query: to},
-	                  travelMode: 'DRIVING'
-	                },
-	                function(response, status) {
-	                  if (status === 'OK') {
-	                    directionsRenderer.setDirections(response);
-	                  } else {
-	                    window.alert('Directions request failed due to ' + status);
-	                  }
-	                });
+	        function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    		    directionsService.route(
+                {
+                  origin: {query: from},
+                  destination: {query: to},
+                  travelMode: 'DRIVING'
+                },
+                function(response, status) {
+                  if (status === 'OK') {
+                    directionsRenderer.setDirections(response);
+                  } else {
+                    window.alert('Directions request failed due to ' + status);
+                  }
+                });
 
-	          }
-			
-			if(ride=='bike'){
-				let carbon=dis*2.31;
-	       		document.getElementById('carbon').innerHTML=`Carbon Emission: ${carbon}`;
-			}
-			if(ride=='cycle'){
-	       		document.getElementById('carbon').innerHTML=`You took a cabon free ride.`;
-			}
-			if(ride=='car'){
-	       		let carbon=dis*2.68;
-	       		document.getElementById('carbon').innerHTML=`Carbon Emission: ${carbon}`;
-			}
-			if(ride=='walk'){
-	       		document.getElementById('carbon').innerHTML=`You took a carbon free ride!`;
-			}		  
+	        }
+
+	        function calculateCarbon(ride) {
+	        	let mileage;
+	        	let leafPoints;
+	        	let rideLeafPoints = 0;
+
+	        	if(ride == "bike") {
+	        		mileage = 50;
+	        		leafPoints = 15;
+	        	} else if(ride == "car") {
+	        		mileage = 20;
+	        		leafPoints = 10;
+	        	} else if(ride == "bus") {
+	        		mileage = 20;
+	        		leafPoints = 15;
+	        	} else if(ride == "train") {
+	        		mileage = 100;
+	        		leafPoints = 20;
+	        	} else {
+	        		leafPoints = 25;
+	        	}
+
+	        	
+	        	let totalOccupants = commute.count;
+	        	let carbonEmittedPerLitre = 2.31;
+
+	        	let fuelRequiredPerPerson = (dis/mileage);
+	        	let totalFuelRequired = ((dis/mileage)/totalOccupants);
+
+	        	let carbonEmissionPerPerson = carbonEmittedPerLitre * fuelRequiredPerPerson;
+	        	let totalCarbonEmission;
+	        	let carbonSaved;
+
+	        	console.log(carbonEmissionPerPerson);
+
+	        	if(ride == "walk" || ride == "cycle") {
+	        		carbonSaved = carbonEmittedPerLitre;
+	        	} else {
+	        		carbonSaved = 0;
+	        	}
+	        	
+	        	
+	        	if(totalOccupants == 1) {
+	        		totalCarbonEmission = carbonEmissionPerPerson;
+	        		rideLeafPoints = dis * 4;
+	        	} else {
+	        		totalCarbonEmission = carbonEmittedPerLitre * totalFuelRequired;
+	        		carbonSaved = carbonEmissionPerPerson - totalCarbonEmission;
+	        		rideLeafPoints = dis * 4 * leafPoints;
+	        	}
+
+	        	commute.totalCarbonEmission = totalCarbonEmission;
+	        	commute.carbonSaved = carbonSaved;
+	        	commute.rideLeafPoints = rideLeafPoints;
+
+	        	localStorage.setItem("commute", JSON.stringify(commute));
+
+	        	if(ride == "walk" || ride == "cycle") {
+	        		document.getElementById('carbon-emitted').innerHTML="Carbon Emitted: 0. Yay! You took a cabon free ride.";
+	        	} else {
+	        		document.getElementById('carbon-emitted').innerHTML=`Carbon Emitted: ${totalCarbonEmission}`;
+	        	}
+	        	document.getElementById('carbon-saved').innerHTML=`Carbon Saved: ${carbonSaved}`;
+	        	document.getElementById('leaf-points').innerHTML=`Leaf Points Earned: ${rideLeafPoints}`;
+	        }
+
+	        calculateCarbon(commute.ride);
+		  
 		</script>
 		<script src="./dist/bundle.js"></script>
 		<script async defer

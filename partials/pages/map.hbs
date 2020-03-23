@@ -50,9 +50,9 @@
 		 <script>
         let commute = JSON.parse(localStorage.getItem("commute"));
         console.log(commute);
-			  const queryString = window.location.search;
+			  // const queryString = window.location.search;
 
-			  const urlParams = new URLSearchParams(queryString);
+			  // const urlParams = new URLSearchParams(queryString);
         const from = commute.start;
   		  const to = commute.end;
   		  document.getElementById('from').innerHTML=`From:${from}`;
@@ -94,7 +94,7 @@
 
       }
 	  function end(){
-		  	let url=`${window.location.origin}/end?start=${from}&end=${to}&count=${count}&ride=${ride}&dis=${dis}`
+		  	let url=`${window.location.origin}/end`
 	      window.location.replace(url);
 	  }
     </script>

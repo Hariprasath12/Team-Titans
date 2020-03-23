@@ -100,7 +100,7 @@
         	window.location.replace(url);
 
           }
-      } else if(ride=='bike') {
+      } else if (ride=='bike') {
         var txt;
         var person = prompt("How many are Travelling:", "3");
         if (person == null || person == "") {
@@ -111,9 +111,9 @@
         localStorage.setItem("commute", JSON.stringify(commute));
       	let url=window.location.origin + "/map";
       	window.location.replace(url);  }
-      } else{
-      	let count=0;
-        commute.count = 0;
+      } else {
+      	let count=1;
+        commute.count = 1;
         localStorage.setItem("commute", JSON.stringify(commute));
       	let url=window.location.origin + "/map";
       	window.location.replace(url);  

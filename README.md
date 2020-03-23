@@ -1,6 +1,6 @@
 # Team-Titans
 
-##Description
+## Description
 
 My Tanso is a carbon emission tracker application that helps you track the individual carbon emissions of our daily commutes. 
 My Tanso let's the user set the source, destination and the type of the commute. 
@@ -9,6 +9,7 @@ My Tanso displays and highlights the alternative commute options with lower carb
 My Tanso displays the real time carbon emission data during the commute along with the count of occupants.
 My Tanso shows the amount of CO2 saved & leaves collected after the completion of the commute.
 My Tanso prototype uses the below default values for its Carbon emission/savings calculations:
+
 CO2 emitted per litre of Petrol = 2.31kg/ltr
 CO2 emitted per litre of Diesel = 2.68kg/ltr
 Number of Occupants for Public Transport Bus = 50
@@ -19,7 +20,8 @@ Rewards:
 *The user gets 4 leafs per KM travelled.
 *The user gets 
 *25X leafs/km on commute by walk.
-*15X leafs/km on commute by bicycle.
+*25X leafs/km on commute by bicycle.
+*15X leafs/km on commute by bike.
 *10X leafs/km on shared commute by car,
 *15X leafs/km on public commute by bus,
 *20X leafs/km on public commute by train.
@@ -32,9 +34,9 @@ Scenario 1: Car with 1 Occupant
 No of occupants (n)= 1
 Distance (x) = 35km
 Milage of the vehicle (y) = 20km/ltr
-Fuel required for x km per person (f) = (x/y)/n => (35/20)1 = 1.75ltr
+Fuel required for x km per person (f) = (x/y)/n => (35/20)/1 = 1.75ltr
 CO2 emitted per litre (c) = 2.31kg
-CO2 emitted for f litres per person = c*f => 2.31*1.75 =4.04 kg/CO2
+CO2 emitted for f litres per person = c*f => 2.31*1.75 = 4.04 kg/CO2
 *Leafs rewarded = 35km*4 = 140
 
 Scenario 2: Car with 3 Occupants
@@ -42,7 +44,7 @@ Scenario 2: Car with 3 Occupants
 No of occupants (n)= 3
 Distance (x) =35km
 Milage of the vehicle (y)=20km/ltr
-Fuel required for x km per person (f) = (x/y)/n => (35/20)3 = 0.58ltr
+Fuel required for x km per person (f) = (x/y)/n => (35/20)/3 = 0.58ltr
 CO2 emitted per litre (c) = 2.31kg
 CO2 emitted for f litres = c*f => 2.31*0.58 =1.33 kg/CO2
 
