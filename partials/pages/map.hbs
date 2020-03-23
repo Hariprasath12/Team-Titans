@@ -3,16 +3,104 @@
 	<head>
 	  {{> head title="Carbon Footprint - Happy Journey"}}
 	</head>
+	 <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 80%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 70px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
 	<body>
 		<div id="header">
 			{{> topNav}}
 		</div>
 		<div id="content">
-		  	
+		  	 <div id="floating-panel">
+                   <div id='from'>
+
+				   </div>
+				   <div id='to'>
+				   </div>
+				   <button onclick="end()">End</button>
+			   </div>
+			   <div id="map"></div>
 		</div>
 		<div id="footer">
 			{{> bottomNav}}
 		</div>
+		 <script>
+			 const queryString = window.location.search;
+
+			 const urlParams = new URLSearchParams(queryString);
+          const from = urlParams.get('start');
+		  const to = urlParams.get('end');
+		  document.getElementById('from').innerHTML=`From:${from}`;
+		  document.getElementById('to').innerHTML=`To:${to}`;
+		  const count = urlParams.get('count');
+		  const ride= urlParams.get('ride');
+		  const dis= urlParams.get('dis');
+      function initMap() {
+		  
+        var directionsService = new google.maps.DirectionsService();
+        var directionsRenderer = new google.maps.DirectionsRenderer();
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 7,
+          center: {lat: 41.85, lng: -87.65}
+        });
+        directionsRenderer.setMap(map);
+
+        var onChangeHandler = function() {
+          calculateAndDisplayRoute(directionsService, directionsRenderer);
+        };
+        document.body.addEventListener('load', onChangeHandler);
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+		  
+
+        directionsService.route(
+            {
+              origin: {query: from},
+              destination: {query: to},
+              travelMode: 'DRIVING'
+            },
+            function(response, status) {
+              if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+              } else {
+                window.alert('Directions request failed due to ' + status);
+              }
+            });
+
+      }
+	  function end(){
+		  	let url=`${window.location.origin}/end?start=${from}&end=${to}&count=${count}&ride=${ride}&dis=${dis}`
+	window.location.replace(url);  
+
+	  }
+    </script>
 		<script src="./dist/bundle.js"></script>
+		<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnPKOObu8W8kngc9yiYesWpY4UHplvLao&callback=initMap">
+    </script>
 	</body>
 </html>

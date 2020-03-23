@@ -16,11 +16,13 @@
 		</div>
 <script src="./dist/bundle.js"></script>
 <script>
-
 	let car='car';
 	let bike='motorcycle';
 	let cycle='cycle';
 	let walk='walk';
+let totaldistance=0;
+	
+
 	function mapInit() {
     // console.log('map');
     var directionsService = new google.maps.DirectionsService();
@@ -45,6 +47,8 @@ function updateUI(distance){
 console.log(distance)
      let dis=distance.split(' ');
 	 distance=Number(dis[0]);
+	  totaldistance=Number(dis[0]);
+	 console.log(totaldistance)
 	if(distance<=1){
     document.getElementById(walk).style.backgroundColor="#1aff1a";
 	}else if(distance>1 && distance<= 5){
@@ -67,10 +71,7 @@ console.log(distance)
           if (status === 'OK') {
             directionsRenderer.setDirections(response);
 			console.log(response.routes[0].legs[0])
-			document.getElementById(car).addEventListener('click', startRide('car'));
-document.getElementById(bike).addEventListener('click', startRide('bike'));
-document.getElementById(cycle).addEventListener('click', startRide('cycle'));
-document.getElementById(walk).addEventListener('click', startRide('walk'));
+		
 			updateUI(response.routes[0].legs[0].distance.text)
           } else {
             window.alert('Directions request failed due to ' + status);
@@ -84,7 +85,11 @@ if(ride=='car'){
   if (person == null || person == "") {
     txt = "User cancelled the prompt.";
   } else {
-    console.log(person)
+    console.log(person);
+	let count=person;
+	let url=`${window.location.origin}/map?start=${document.getElementById('source').value}&end=${document.getElementById('destination').value}&count=${count}&ride=${ride}&dis=${totaldistance}`
+	window.location.replace(url);
+
   }
 }else if(ride=='bike'){
   var txt;
@@ -92,10 +97,13 @@ if(ride=='car'){
   if (person == null || person == "") {
     txt = "User cancelled the prompt.";
   } else {
-    console.log(person)
-  }
+	let count=person;
+	let url=`${window.location.origin}/map?start=${document.getElementById('source').value}&end=${document.getElementById('destination').value}&count=${count}&ride=${ride}&dis=${totaldistance}`
+	window.location.replace(url);  }
 }else{
-
+	let count=0;
+	let url=`${window.location.origin}/map?start=${document.getElementById('source').value}&end=${document.getElementById('destination').value}&count=${count}&ride=${ride}&dis=${totaldistance}`
+	window.location.replace(url);  
 }
 }
 

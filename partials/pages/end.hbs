@@ -8,11 +8,46 @@
 			{{> topNav}}
 		</div>
 		<div id="content">
-		  	
+		  	Hope you have a Nice Journey
+			  <div id="from">
+
+			  </div>
+			  <div id="to">
+
+			  </div>
+			  <div id="carbon">
+
+			  </div>
 		</div>
 		<div id="footer">
 			{{> bottomNav}}
 		</div>
+		<script>
+			 const queryString = window.location.search;
+			 const urlParams = new URLSearchParams(queryString);
+          const from = urlParams.get('start');
+		  const to = urlParams.get('end');
+		  document.getElementById('from').innerHTML=`From:${from}`;
+		  document.getElementById('to').innerHTML=`To:${to}`;
+		  const count = urlParams.get('count');
+		  const ride= urlParams.get('ride');
+		  const dis=urlParams.get('dis');
+		  if(ride=='bike'){
+			  let carbon=dis*2.31;
+       document.getElementById('carbon').innerHTML=`carbon:${carbon}`;
+		  }
+		  if(ride=='cycle'){
+       document.getElementById('carbon').innerHTML=`You took a cabon free ride.`;
+		  }
+		  if(ride=='car'){
+       			  let carbon=dis*2.68;
+       document.getElementById('carbon').innerHTML=`carbon:${carbon}`;
+		  }
+		  if(ride=='walk'){
+       document.getElementById('carbon').innerHTML=`You took a cabon free ride.`;
+		  }
+		  
+		</script>
 		<script src="./dist/bundle.js"></script>
 	</body>
 </html>
