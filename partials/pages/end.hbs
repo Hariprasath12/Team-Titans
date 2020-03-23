@@ -111,10 +111,11 @@
 
 	        	
 	        	let totalOccupants = commute.count;
+	        	let carbonEmittedPerLitre;
 	        	if(ride == "bike") {
-	        		let carbonEmittedPerLitre = 2.31;
+	        		carbonEmittedPerLitre = 2.31;
 	        	} else {
-	        		let carbonEmittedPerLitre = 2.68;
+	        		carbonEmittedPerLitre = 2.68;
 	        	}
 
 	        	let fuelRequiredPerPerson = (dis/mileage);
