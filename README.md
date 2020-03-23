@@ -17,30 +17,30 @@ Number of Occupants for Public Transport Train= 150
 
 Rewards:
 
-*The user gets 4 leafs per KM travelled.
-*The user gets 
-*25X leafs/km on commute by walk.
-*25X leafs/km on commute by bicycle.
-*15X leafs/km on commute by bike.
-*10X leafs/km on shared commute by car,
-*15X leafs/km on public commute by bus,
-*20X leafs/km on public commute by train.
-*The user can convert 1000 leafs collected to create a tree.
+* The user gets 4 leafs per KM travelled.
+* The user gets 
+* 25X leafs/km on commute by walk.
+* 25X leafs/km on commute by bicycle.
+* 15X leafs/km on commute by bike.
+* 10X leafs/km on shared commute by car,
+* 15X leafs/km on public commute by bus,
+* 20X leafs/km on public commute by train.
+* The user can convert 1000 leafs collected to create a tree.
 
 Example:
 
 Scenario 1: Car with 1 Occupant
------------------------------------------
+-------------------------------
 No of occupants (n)= 1
 Distance (x) = 35km
 Milage of the vehicle (y) = 20km/ltr
 Fuel required for x km per person (f) = (x/y)/n => (35/20)/1 = 1.75ltr
 CO2 emitted per litre (c) = 2.31kg
 CO2 emitted for f litres per person = c*f => 2.31*1.75 = 4.04 kg/CO2
-*Leafs rewarded = 35km*4 = 140
+* Leafs rewarded = 35km*4 = 140
 
 Scenario 2: Car with 3 Occupants
------------------------------------------
+--------------------------------
 No of occupants (n)= 3
 Distance (x) =35km
 Milage of the vehicle (y)=20km/ltr
@@ -62,6 +62,10 @@ Diesel Vehicle
 --------------
 CO2 emitted for Diesel Vehicle = ((x/y)/n ) * 2.68
 CO2 Saved  for Diesel Vehicle= ((x/y) * 2.68) - (((x/y)/n ) * 2.68)
+
+## Application Flow
+
+<a href="https://github.com/Hariprasath12/Team-Titans/raw/master/MyTanso.ppt">MyTanso.ppt</a>
 
 
 ## Run
