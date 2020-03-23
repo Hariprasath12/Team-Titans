@@ -8,7 +8,7 @@ const NodemonPlugin = require('nodemon-webpack-plugin'); // Ding
 module.exports = {
 
 
-  entry: ['./js/index.js','./style/index.scss'],
+  entry: ['./js/index.js','./style/index.scss','./js/location.js'],
 
   output: {
     path: path.resolve(__dirname, 'dist'),

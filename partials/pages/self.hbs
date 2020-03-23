@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 	  {{> head title="Carbon Footprint - Self Transport"}}
+	  		
 	</head>
 	<body>
 		<div id="header">
@@ -13,6 +14,67 @@
 		<div id="footer">
 			{{> bottomNav}}
 		</div>
-		<script src="./dist/bundle.js"></script>
+<script src="./dist/bundle.js"></script>
+<script>
+	function mapInit() {
+    // console.log('map');
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+    var map = new google.maps.Map(document.getElementById('map-canvas'), {
+      zoom: 7,
+      center: {lat: 41.85, lng: -87.65}
+    });
+    directionsRenderer.setMap(map);
+
+    var onChangeHandler = function() {
+      calculateAndDisplayRoute(directionsService, directionsRenderer);
+    };
+    document.getElementById('source').addEventListener('change', onChangeHandler);
+    document.getElementById('destination').addEventListener('change', onChangeHandler);
+  }
+
+  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+
+	  
+     let fromlocation = window.document.getElementById("source").value;
+     let toLocation = window.document.getElementById("destination").value;
+ if(fromlocation!=''&& toLocation!=''){
+    let url=`https://maps.googleapis.com/maps/api/directions/json?origin=${fromlocation}&destination=${toLocation}/&key=AIzaSyBnPKOObu8W8kngc9yiYesWpY4UHplvLao`;
+ console.log(fromlocation);
+ console.log(toLocation);
+
+ fetchlocation(url);
+ }
+    directionsService.route(
+        {
+          origin: {query: document.getElementById('source').value},
+          destination: {query: document.getElementById('destination').value},
+          travelMode: 'DRIVING'
+        },
+        function(response, status) {
+          if (status === 'OK') {
+            directionsRenderer.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+  }
+
+   let fetchlocation=async (url)=> {
+
+     let location =await fetch(url).catch(function(error) {
+         console.log('Failed: ', error);
+       });;
+     console.log(location);
+ };
+
+
+
+
+ 
+</script>
+		    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnPKOObu8W8kngc9yiYesWpY4UHplvLao&callback=mapInit">
+    </script>
 	</body>
 </html>

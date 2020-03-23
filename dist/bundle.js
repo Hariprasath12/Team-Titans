@@ -93,7 +93,18 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("let toggleNavMenu = document.getElementById(\"toggle-nav-menu\");\nlet navigation = document.getElementById(\"navigation\");\n\ntoggleNavMenu.addEventListener('click', function(e) {\n\tnavigation.classList.toggle('active');\n\te.preventDefault();\n});\n\n//# sourceURL=webpack:///./js/index.js?");
+eval("let toggleNavMenu = document.getElementById(\"toggle-nav-menu\");\r\nlet navigation = document.getElementById(\"navigation\");\r\n\r\ntoggleNavMenu.addEventListener('click', function(e) {\r\n\tnavigation.classList.toggle('active');\r\n\te.preventDefault();\r\n});\n\n//# sourceURL=webpack:///./js/index.js?");
+
+/***/ }),
+
+/***/ "./js/location.js":
+/*!************************!*\
+  !*** ./js/location.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("\r\n\r\n// let fetchCarbon=()=>{\r\n//     let fromlocation = window.document.getElementById(\"source\").value;\r\n//     let toLocation = window.document.getElementById(\"destination\").value;\r\n// if(fromlocation!=''&& toLocation!=''){\r\n//     let url=`https://maps.googleapis.com/maps/api/directions/json?origin=${fromlocation}&destination=${toLocation}/&key=AIzaSyBnPKOObu8W8kngc9yiYesWpY4UHplvLao`;\r\n// console.log(fromlocation);\r\n// console.log(toLocation);\r\n\r\n// fetchlocation(url);\r\n// }\r\n// }\r\n// document.getElementById('source').addEventListener('change',fetchCarbon);\r\n// document.getElementById('destination').addEventListener('change',fetchCarbon);\r\n// console.log(url);\r\n\r\n\r\n// let fetchlocation=async (url)=> {\r\n//     let location =await fetch(url).catch(function(error) {\r\n//         console.log('Failed: ', error);\r\n//       });;\r\n//     console.log(location);\r\n// };\r\n\n\n//# sourceURL=webpack:///./js/location.js?");
 
 /***/ }),
 
@@ -109,13 +120,13 @@ eval("// removed by extract-text-webpack-plugin\n\n//# sourceURL=webpack:///./st
 /***/ }),
 
 /***/ 0:
-/*!**********************************************!*\
-  !*** multi ./js/index.js ./style/index.scss ***!
-  \**********************************************/
+/*!***************************************************************!*\
+  !*** multi ./js/index.js ./style/index.scss ./js/location.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! ./js/index.js */\"./js/index.js\");\nmodule.exports = __webpack_require__(/*! ./style/index.scss */\"./style/index.scss\");\n\n\n//# sourceURL=webpack:///multi_./js/index.js_./style/index.scss?");
+eval("__webpack_require__(/*! ./js/index.js */\"./js/index.js\");\n__webpack_require__(/*! ./style/index.scss */\"./style/index.scss\");\nmodule.exports = __webpack_require__(/*! ./js/location.js */\"./js/location.js\");\n\n\n//# sourceURL=webpack:///multi_./js/index.js_./style/index.scss_./js/location.js?");
 
 /***/ })
 
