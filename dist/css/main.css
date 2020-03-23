@@ -631,6 +631,77 @@ h3 {
     text-align: center; }
     #content .tree-container video {
       width: 400px; }
+  #content #user-profile {
+    padding: 20px; }
+    #content #user-profile .profile-image-and-name {
+      padding: 10px;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center; }
+      #content #user-profile .profile-image-and-name .image {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #000;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        padding: 10px;
+        margin-right: 10px; }
+        #content #user-profile .profile-image-and-name .image .fa {
+          color: #000; }
+      #content #user-profile .profile-image-and-name h3 {
+        color: #000;
+        font-size: 16px; }
+    #content #user-profile .leaf-points {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex; }
+      #content #user-profile .leaf-points .points {
+        width: 50%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: space-evenly;
+        -webkit-justify-content: space-evenly;
+        -ms-flex-pack: space-evenly;
+        justify-content: space-evenly; }
+        #content #user-profile .leaf-points .points .label {
+          font-size: 24px; }
+        #content #user-profile .leaf-points .points.leaf {
+          border-right: 1px solid #000; }
+        #content #user-profile .leaf-points .points .fa {
+          color: #008000; }
+    #content #user-profile #carbon-saved-stats {
+      padding: 20px;
+      border: 0; }
+      #content #user-profile #carbon-saved-stats .stats {
+        position: static; }
 
 #footer .bottom-nav {
   border-top: 1px solid;
