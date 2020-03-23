@@ -16,16 +16,26 @@
         padding: 0;
       }
       #floating-panel {
+        width: 200px;
+        padding: 10px 0;
         position: absolute;
         top: 70px;
-        left: 25%;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
         z-index: 5;
         background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
+        border: 2px solid #008000;
         text-align: center;
         font-family: 'Roboto','sans-serif';
         line-height: 30px;
+      }
+      button {
+        background: 0;
+        border: 1px solid #008000;
+        width: 100px;
+        padding: 5px 0;
+        margin-top: 10px;
       }
     </style>
 	<body>
@@ -39,7 +49,7 @@
 				   </div>
 				   <div id='to'>
 				   </div>
-				   <button onclick="end()">End</button>
+				   <button onclick="end()">End Ride</button>
 			   </div>
 			   <div id="map"></div>
       </div>
