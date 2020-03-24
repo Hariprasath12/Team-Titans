@@ -76,7 +76,7 @@ Install <a href="https://nodejs.org/en/download/" target="_blank">Node</a>
 ```
 $ git clone https://github.com/Hariprasath12/Team-Titans.git
 $ cd Team-Titans
-$ cd npm i
+$ npm install
 $ webpack
 $ node index.js (In another terminal window with current project folder)
 ```
@@ -86,7 +86,7 @@ $ node index.js (In another terminal window with current project folder)
 ```
 $ git clone https://github.com/Hariprasath12/Team-Titans.git
 $ cd Team-Titans
-$ cd npm i
+$ npm install
 $ npm run webpack
 
 Open new tab in terminal and run
