@@ -15,7 +15,53 @@
 		</div>
 		<script src="./dist/bundle.js"></script>
 		<script type="text/javascript">
+			var months = new Array();
+			months[0] = "January";
+			months[1] = "February";
+			months[2] = "March";
+			months[3] = "April";
+			months[4] = "May";
+			months[5] = "June";
+			months[6] = "July";
+			months[7] = "August";
+			months[8] = "September";
+			months[9] = "October";
+			months[10] = "November";
+			months[11] = "December";
+
+			var d = new Date();
+			var day = d.getDate().toString();
+			var month = months[d.getMonth()].toLowerCase();
+			var year = d.getFullYear().toString();
+
 			localStorage.setItem("commute", "{}");
+			
+			if(localStorage.getItem("my_tanso") === null) {
+				var my_tanso = {
+					"personal_details": {},
+					"commute_details": {},
+					"total_carbon_stats": {
+						"total_carbon_emitted": 0,
+						"total_carbon_saved": 0,
+						"total_leaf_points": 0
+					}
+				};
+
+				var commute_details = my_tanso["commute_details"];
+				commute_details[year] = {};
+				commute_details[year][month] = {};
+				commute_details[year][month][day] = {};
+				commute_details[year][month][day]["commutes"] = [];
+				commute_details[year][month]["carbon_stats"] = {
+					"carbon_emitted": 0,
+					"carbon_saved": 0,
+					"leaf_points": 0
+				}
+
+				my_tanso["commute_details"] = commute_details;
+
+				localStorage.setItem("my_tanso", JSON.stringify(my_tanso));
+			}
 		</script>
 	</body>
 </html>
