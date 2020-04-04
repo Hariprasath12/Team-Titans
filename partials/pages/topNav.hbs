@@ -19,10 +19,10 @@
 		<hr/>
 		<div class="leaf-points">
 			<div class="points leaf">
-				<span class="label">1500</span><i class="fa fa-leaf" aria-hidden="true"></i>
+				<span class="label" id="leaf-points">1500</span><i class="fa fa-leaf" aria-hidden="true"></i>
 			</div>
 			<div class="points tree">
-				<span class="label">1</span><i class="fa fa-tree" aria-hidden="true"></i>
+				<span class="label" id="trees">1</span><i class="fa fa-tree" aria-hidden="true"></i>
 			</div>
 		</div>
 		<hr/>
@@ -34,3 +34,41 @@
 		</ul>
 	</div>
 </div>
+
+<script type="text/javascript">			
+	function loadJSON(callback) {
+	    var xobj = new XMLHttpRequest();
+	    xobj.overrideMimeType("application/json");
+	    xobj.open('GET', 'sample_data', true);
+	    xobj.onreadystatechange = function () {
+	          if (xobj.readyState == 4 && xobj.status == "200") {
+	            callback(xobj.responseText);
+	          }
+	    };
+	    xobj.send(null);  
+	 }
+
+	 loadJSON(function(response) {
+	    var my_tanso = JSON.parse(response);
+	    document.getElementById("leaf-points").innerHTML = Math.round(my_tanso.total_carbon_stats.total_leaf_points);
+	    if(document.getElementById("leafPoints")) {
+	    	document.getElementById("leafPoints").innerHTML = Math.round(my_tanso.total_carbon_stats.total_leaf_points);
+	    }
+	    if(document.getElementById("leaf-count")) {
+	    	document.getElementById("leaf-count").innerHTML = Math.round(my_tanso.total_carbon_stats.total_leaf_points);
+	    }
+
+	    document.getElementById("trees").innerHTML = my_tanso.tree_count;
+	    if(document.getElementById("tree-count")) {
+	    	document.getElementById("tree-count").innerHTML = my_tanso.tree_count;
+	    }
+
+	    if(document.getElementById("carbon-saved-home")) {
+	    	document.getElementById("carbon-saved-home").innerHTML = my_tanso.total_carbon_stats.total_carbon_saved.toFixed(2);
+	    }
+
+	    if(document.getElementById("carbon-saved-profile")) {
+	    	document.getElementById("carbon-saved-profile").innerHTML = my_tanso.total_carbon_stats.total_carbon_saved.toFixed(2);
+	    }
+	 });
+</script>
