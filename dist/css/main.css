@@ -651,6 +651,11 @@ h3 {
     background-image: -webkit-linear-gradient(318deg, #F4D03F 0%, #16A085 100%);
     background-image: -o-linear-gradient(318deg, #F4D03F 0%, #16A085 100%);
     background-image: linear-gradient(132deg, #F4D03F 0%, #16A085 100%); }
+    #content .tree-container img {
+      display: block;
+      width: 300px;
+      margin: 0 auto;
+      margin-bottom: 10px; }
     #content .tree-container button {
       padding: 20px 40px;
       border: 1px solid #90ee90;
@@ -660,6 +665,10 @@ h3 {
     #content .tree-container h1 {
       font-size: 32px;
       line-height: 1.2; }
+    #content .tree-container p {
+      margin-bottom: 10px; }
+    #content .tree-container .virtual-tree {
+      color: #fff; }
   #content #user-profile {
     padding: 20px; }
     #content #user-profile .profile-image-and-name {

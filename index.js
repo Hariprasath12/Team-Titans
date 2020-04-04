@@ -56,6 +56,9 @@ app.get('/', function (req, res) {
   app.get('/tree', function (req, res) {
     res.render('tree',{layout: false})
   })
+  app.get('/create-virtual-tree', function (req, res) {
+    res.render('virtualTree',{layout: false})
+  })
   app.get('/profile', function (req, res) {
     res.render('profile',{layout: false})
   })

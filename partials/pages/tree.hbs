@@ -21,5 +21,50 @@
 			{{> bottomNav}}
 		</div>
 		<script src="./dist/bundle.js"></script>
+
+		<script type="text/javascript">
+			function loadJSON(callback) {
+			    var xobj = new XMLHttpRequest();
+			    xobj.overrideMimeType("application/json");
+			    xobj.open('GET', 'sample_data', true);
+			    xobj.onreadystatechange = function () {
+			          if (xobj.readyState == 4 && xobj.status == "200") {
+			            callback(xobj.responseText);
+			          }
+			    };
+			    xobj.send(null);  
+			 }
+
+			 loadJSON(function(response) {
+			 	var my_tanso = JSON.parse(response);
+
+				var createTreeBtn = document.getElementById("create-tree-button");
+				if(my_tanso.total_carbon_stats.total_leaf_points < 1000) {
+					createTreeBtn.style.display = 'none';
+				}
+				createTreeBtn.addEventListener('click', function() {
+					my_tanso.tree_count += 1;
+					my_tanso.total_carbon_stats.total_leaf_points -= 1000;
+
+					updateData(my_tanso);
+				});
+			});
+
+			function updateData(my_tanso) {
+				var my_tanso_data = JSON.stringify(my_tanso);
+	        	var xhr = new XMLHttpRequest();
+				xhr.open("POST", "/sample_data", true);
+				xhr.setRequestHeader('Content-Type', 'application/json');
+				xhr.send(JSON.stringify({
+				    tanso_data_details: my_tanso_data
+				}));
+				xhr.onload = function() {
+				  console.log("Tanso Details Updated");
+				}
+
+				let url=window.location.origin + "/create-virtual-tree";
+      			window.location.replace(url);
+	        }
+		</script>
 	</body>
 </html>
