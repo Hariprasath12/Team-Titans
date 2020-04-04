@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	  {{> head title="busbon Footprint - Public Transport"}}
+	  {{> head title="busbon Footprint - Public Transport" map=true}}
 	</head>
 	<body>
 	  	<div id="header">
@@ -15,26 +15,36 @@
 	  	</div>
 	  	<script src="./dist/bundle.js"></script>
 		<script>
+			var subscriptionKey = 'Nza85gIRM42J_9HX9kpHwT2ngY-cSobd0o5IZTM8kBs';
+	        var subscriptionKeyCredential = new atlas.service.SubscriptionKeyCredential(subscriptionKey);
+	        var pipeline = atlas.service.MapsURL.newPipeline(subscriptionKeyCredential, {
+	          retryOptions: { maxTries: 4 } // Retry options
+	        });
+	        var searchURL = new atlas.service.SearchURL(pipeline);
+
 		  	let bus='bus';
 		  	let train='train';
 		    let totaldistance=0;
 		  	
 		    let commute = JSON.parse(localStorage.getItem("commute"));
 
+		    mapInit();
+
 		  	function mapInit() {
-		      // console.log('map');
-		      var directionsService = new google.maps.DirectionsService();
-		      var directionsRenderer = new google.maps.DirectionsRenderer();
-		      var map = new google.maps.Map(document.getElementById('map-canvas'), {
-		        zoom: 7,
-		        center: {lat: 41.85, lng: -87.65}
-		      });
-		      directionsRenderer.setMap(map);
+		      var map = new atlas.Map('map-canvas', {
+                  center: [11.127123, 78.656891],
+                  zoom: 1,
+                  view: 'Auto',
+                  authOptions: {
+                      authType: 'subscriptionKey',
+                      subscriptionKey: subscriptionKey
+                  }
+              });
 
 		      var onChangeHandler = function() {
 		    		document.getElementById(bus).style.backgroundColor="#b3d4fc";
 		    		document.getElementById(train).style.backgroundColor="#b3d4fc";
-		        	calculateAndDisplayRoute(directionsService, directionsRenderer);
+		        	calculateAndDisplayRoute(map);
 		      };
 		      document.getElementById('source').addEventListener('change', onChangeHandler);
 		      document.getElementById('destination').addEventListener('change', onChangeHandler);
@@ -42,11 +52,7 @@
 
 		    function updateUI(distance){
 		        commute.transit = "shared";
-		        // console.log(distance)
-		        let dis=distance.split(' ');
-		    	  distance=Number(dis[0]);
-		    	  totaldistance=Number(dis[0]);
-		    	  // console.log(totaldistance);
+		       
 		        commute.distance = distance;
 
 		    	if(distance>5 && distance <=15){
@@ -56,26 +62,100 @@
 		        }
 		    }
 
-		    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+		    function calculateAndDisplayRoute(map) {
 		      commute.start = document.getElementById('source').value;
 		      commute.end = document.getElementById('destination').value;
-		      directionsService.route(
-		          {
-		            origin: {query: document.getElementById('source').value},
-		            destination: {query: document.getElementById('destination').value},
-		            travelMode: 'DRIVING'
-		          },
-		          function(response, status) {
-		            if (status === 'OK') {
-		              directionsRenderer.setDirections(response);
-		  			      console.log(response.routes[0].legs[0])
-		  		
-		  			     updateUI(response.routes[0].legs[0].distance.text)
-		            } else {
-		              window.alert('Directions request failed due to ' + status);
+
+		      if(commute.start !== "" && commute.end !== "") {
+		        searchURL.searchAddress(atlas.service.Aborter.timeout(10000), commute.start)
+		          .then(response => {
+		            // console.log(response.results);
+		            if(response.results.length > 0) {
+		              commute.start_points = response.results[0].position;
 		            }
-		          });
+		        });
+
+		        searchURL.searchAddress(atlas.service.Aborter.timeout(10000), commute.end)
+		          .then(response => {
+		            // console.log(response.results);
+		            if(response.results.length > 0) {
+		              commute.end_points = response.results[0].position;
+		            }
+		        });
+
+		        var routeURL = new atlas.service.RouteURL(pipeline);
+
+		        map.events.add("ready", function () {
+		          
+		          dataSource = new atlas.source.DataSource();
+		          map.sources.add(dataSource);
+
+		          setTimeout(function() {
+		            console.log(commute);
+		            console.log(commute.start_points.lat);
+		            console.log(commute.start_points.lon);
+		            var startPoint = new atlas.data.Feature(new atlas.data.Point([commute.start_points.lon, commute.start_points.lat]), {
+		              title: commute.start,
+		              icon: "pin-blue"
+		            });
+
+		            var endPoint = new atlas.data.Feature(new atlas.data.Point([commute.end_points.lon, commute.end_points.lat]), {
+		              title: commute.end,
+		              icon: "pin-round-blue"
+		            });
+
+		            dataSource.add([startPoint, endPoint]);
+
+
+		            map.layers.add(new atlas.layer.LineLayer(dataSource, null, {
+		              strokeColor: '#2272B9',
+		              strokeWidth: 5,
+		              lineJoin: 'round',
+		              lineCap: 'round'
+		            }), 'labels');
+
+
+		            map.layers.add(new atlas.layer.SymbolLayer(dataSource, null, {
+		              iconOptions: {
+		                image: ['get', 'icon'],
+		                allowOverlap: true,
+		                ignorePlacement: true
+		              },
+		              textOptions: {
+		                textField: ['get', 'title'],
+		                offset: [0, 1.2]
+		              },
+		              filter: ['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]
+		            }));
+
+		            
+		            var coordinates = [
+		              startPoint.geometry.coordinates,
+		              endPoint.geometry.coordinates
+		            ];
+
+		            //Calculate a route.
+		            routeURL.calculateRouteDirections(atlas.service.Aborter.timeout(10000), coordinates).then((directions) => {
+		                var data = directions.geojson.getFeatures();
+		                dataSource.add(data);
+		                
+		                var distanceInMeters = directions.routes[0].summary.lengthInMeters;
+		                var distance = distanceInMeters / 1000;
+		                updateUI(distance);
+
+		                map.setCamera({
+		                  bounds: data.bbox,
+		                  padding: 30 //Add a padding to account for the pixel size of symbols.
+		                });
+		            });  
+		          }, 1000);
+		          
+		        });
+
+		        // console.log(commute);
+		      }
 		    }
+
 		  function startRide(ride){
 		    commute.ride = ride;
 		    if(ride=='bus') {
@@ -113,7 +193,6 @@
 		  }
 
 		  </script>
-		  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnPKOObu8W8kngc9yiYesWpY4UHplvLao&callback=mapInit"></script>
     </script>
 	</body>
 </html>
