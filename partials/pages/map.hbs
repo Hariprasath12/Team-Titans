@@ -72,7 +72,7 @@
   		  const dis= commute.distance;
 
         function initMap() {
-  		  
+          console.log('init map');
           var directionsService = new google.maps.DirectionsService();
           var directionsRenderer = new google.maps.DirectionsRenderer();
           var map = new google.maps.Map(document.getElementById('map'), {
@@ -84,29 +84,38 @@
           var onChangeHandler = function() {
             calculateAndDisplayRoute(directionsService, directionsRenderer);
           };
-          document.body.addEventListener('load', onChangeHandler);
+          window.addEventListener('load', onChangeHandler);
         }
 
-      function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-		    directionsService.route(
-            {
-              origin: {query: from},
-              destination: {query: to},
-              travelMode: 'DRIVING'
-            },
-            function(response, status) {
-              if (status === 'OK') {
-                directionsRenderer.setDirections(response);
-              } else {
-                window.alert('Directions request failed due to ' + status);
-              }
-            });
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(browserHasGeolocation ?
+                                'Error: The Geolocation service failed.' :
+                                'Error: Your browser doesn\'t support geolocation.');
+          infoWindow.open(map);
+        }
 
-      }
-	  function end(){
-		  	let url=`${window.location.origin}/end`
-	      window.location.replace(url);
-	  }
+        function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+          directionsService.route(
+          {
+            origin: {query: from},
+            destination: {query: to},
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              directionsRenderer.setDirections(response);
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          });
+
+        }
+
+    	  function end(){
+    		  	let url=`${window.location.origin}/end`
+    	      window.location.replace(url);
+    	  }
     </script>
 		<script src="./dist/bundle.js"></script>
 		<script async defer

@@ -461,7 +461,8 @@ h3 {
 
 #content {
   width: 100%;
-  height: 100%; }
+  height: -webkit-calc(100% - 104px);
+  height: calc(100% - 104px); }
   #content .container {
     position: relative; }
   #content #carbon-saved-stats {
@@ -628,9 +629,37 @@ h3 {
         #content .points-container .leaf-points .points .fa {
           color: #008000; }
   #content .tree-container {
-    text-align: center; }
-    #content .tree-container video {
-      width: 400px; }
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    text-align: center;
+    height: 100%;
+    background-color: #F4D03F;
+    background-image: -webkit-linear-gradient(318deg, #F4D03F 0%, #16A085 100%);
+    background-image: -o-linear-gradient(318deg, #F4D03F 0%, #16A085 100%);
+    background-image: linear-gradient(132deg, #F4D03F 0%, #16A085 100%); }
+    #content .tree-container button {
+      padding: 20px 40px;
+      border: 1px solid #90ee90;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background-color: #90ee90; }
+    #content .tree-container h1 {
+      font-size: 32px;
+      line-height: 1.2; }
   #content #user-profile {
     padding: 20px; }
     #content #user-profile .profile-image-and-name {
@@ -702,6 +731,11 @@ h3 {
       border: 0; }
       #content #user-profile #carbon-saved-stats .stats {
         position: static; }
+  #content .reports-container {
+    padding: 10px 0; }
+    #content .reports-container h1, #content .reports-container h3 {
+      text-align: center;
+      margin-bottom: 10px; }
 
 #footer .bottom-nav {
   border-top: 1px solid;

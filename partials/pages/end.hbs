@@ -42,8 +42,6 @@
 			{{> bottomNav}}
 		</div>
 		<script>
-			// const queryString = window.location.search;
-			// const urlParams = new URLSearchParams(queryString);
 			let commute = JSON.parse(localStorage.getItem("commute"));
 			console.log(commute);
 
@@ -79,33 +77,6 @@
 			var day = d.getDate().toString();
 			var month = months[d.getMonth()].toLowerCase();
 			var year = d.getFullYear().toString();
-
-			if(localStorage.getItem("my_tanso") === null) {
-				var my_tanso = {
-					"personal_details": {},
-					"commute_details": {},
-					"total_carbon_stats": {
-						"total_carbon_emitted": 0,
-						"total_carbon_saved": 0,
-						"total_leaf_points": 0
-					}
-				};
-
-				var commute_details = my_tanso["commute_details"];
-				commute_details[year] = {};
-				commute_details[year][month] = {};
-				commute_details[year][month][day] = {};
-				commute_details[year][month][day]["commutes"] = [];
-				commute_details[year][month]["carbon_stats"] = {
-					"carbon_emitted": 0,
-					"carbon_saved": 0,
-					"leaf_points": 0
-				}
-
-				my_tanso["commute_details"] = commute_details;
-
-				localStorage.setItem("my_tanso", JSON.stringify(my_tanso));
-			}
 
 		    function initMap() {		    
 		      var directionsService = new google.maps.DirectionsService();
@@ -218,12 +189,15 @@
 
 	        function rebuildCommuteDetails(my_tanso_details) {
 				var commute_details = my_tanso_details["commute_details"];
+				// console.log('test');
+				// console.log(commute_details);
 
 				if(my_tanso_details["commute_details"][year] == undefined) {
 					commute_details[year] = {};
 					commute_details[year][month] = {};
-					commute_details[year][month][day] = {};
-					commute_details[year][month][day]["commutes"] = [];
+					commute_details[year][month]["daily_commute_details"] = {};
+					commute_details[year][month]["daily_commute_details"][day] = {};
+					commute_details[year][month]["daily_commute_details"][day]["commutes"] = [];
 					commute_details[year][month]["carbon_stats"] = {
 						"carbon_emitted": 0,
 						"carbon_saved": 0,
@@ -232,17 +206,18 @@
 				} else {
 					if(my_tanso_details["commute_details"][year][month] == undefined) {
 						commute_details[year][month] = {};
-						commute_details[year][month][day] = {};
-						commute_details[year][month][day]["commutes"] = [];
+						commute_details[year][month]["daily_commute_details"] = {};
+						commute_details[year][month]["daily_commute_details"][day] = {};
+						commute_details[year][month]["daily_commute_details"][day]["commutes"] = [];
 						commute_details[year][month]["carbon_stats"] = {
 							"carbon_emitted": 0,
 							"carbon_saved": 0,
 							"leaf_points": 0
 						}
 					} else {
-						if(my_tanso_details["commute_details"][year][month][day] == undefined) {
-							commute_details[year][month][day] = {};
-							commute_details[year][month][day]["commutes"] = [];
+						if(my_tanso_details["commute_details"][year][month]["daily_commute_details"][day] == undefined) {
+							commute_details[year][month]["daily_commute_details"][day] = {};
+							commute_details[year][month]["daily_commute_details"][day]["commutes"] = [];
 							commute_details[year][month]["carbon_stats"] = {
 								"carbon_emitted": 0,
 								"carbon_saved": 0,
@@ -255,31 +230,68 @@
 				return commute_details;
 	        }
 
+	        var my_tanso;
+
+	        function loadJSON(callback) {
+			    var xobj = new XMLHttpRequest();
+			    xobj.overrideMimeType("application/json");
+			    xobj.open('GET', 'sample_data', true);
+			    xobj.onreadystatechange = function () {
+			    		// console.log(xobj.readyState);
+			    		// console.log(xobj.status);
+			          if (xobj.readyState == 4 && xobj.status == "200") {
+			          	// console.log(xobj);
+			            callback(xobj.responseText);
+			          }
+			    };
+			    xobj.send(null);  
+			}
+
+
 	        function saveCommuteDetails(commute) {
-	        	var my_tanso = JSON.parse(localStorage.getItem("my_tanso"));
+	        	loadJSON(function(response) {
+			    	my_tanso = JSON.parse(response);
 
-				var commute_details = rebuildCommuteDetails(my_tanso);
-				commute_details[year][month][day]["commutes"].push(commute);
+			    	// console.log(my_tanso);
+					var commute_details = rebuildCommuteDetails(my_tanso);
+					commute_details[year][month]["daily_commute_details"][day]["commutes"].push(commute);
 
-				var carbon_stats = commute_details[year][month]["carbon_stats"];
-				carbon_stats["carbon_emitted"] += commute.totalCarbonEmission;
-				carbon_stats["carbon_saved"] += commute.carbonSaved;
-				carbon_stats["leaf_points"] += commute.rideLeafPoints;
+					var carbon_stats = commute_details[year][month]["carbon_stats"];
+					carbon_stats["carbon_emitted"] += commute.totalCarbonEmission;
+					carbon_stats["carbon_saved"] += commute.carbonSaved;
+					carbon_stats["leaf_points"] += commute.rideLeafPoints;
 
-				commute_details[year][month]["carbon_stats"] = carbon_stats;
+					commute_details[year][month]["carbon_stats"] = carbon_stats;
 
-				my_tanso["commute_details"] = commute_details;
+					my_tanso["commute_details"] = commute_details;
 
-				var total_carbon_stats = my_tanso["total_carbon_stats"];
-				total_carbon_stats["total_carbon_emitted"] += commute.totalCarbonEmission;
-				total_carbon_stats["total_carbon_saved"] += commute.carbonSaved;
-				total_carbon_stats["total_leaf_points"] += commute.rideLeafPoints;
+					var total_carbon_stats = my_tanso["total_carbon_stats"];
+					total_carbon_stats["total_carbon_emitted"] += commute.totalCarbonEmission;
+					total_carbon_stats["total_carbon_saved"] += commute.carbonSaved;
+					total_carbon_stats["total_leaf_points"] += commute.rideLeafPoints;
 
-				my_tanso["total_carbon_stats"] = total_carbon_stats;
+					my_tanso["total_carbon_stats"] = total_carbon_stats;
 
-				localStorage.setItem("my_tanso", JSON.stringify(my_tanso));
+					localStorage.setItem("my_tanso", JSON.stringify(my_tanso));
 
-				localStorage.removeItem("commute");
+					updateData();
+
+					localStorage.removeItem("commute");
+				});
+	        }
+
+	        function updateData() {
+	        	let tanso_data = localStorage.getItem("my_tanso");
+
+	        	var xhr = new XMLHttpRequest();
+				xhr.open("POST", "/sample_data", true);
+				xhr.setRequestHeader('Content-Type', 'application/json');
+				xhr.send(JSON.stringify({
+				    tanso_data_details: tanso_data
+				}));
+				xhr.onload = function() {
+				  console.log("Tanso Details Updated");
+				}
 	        }
 		  
 		</script>

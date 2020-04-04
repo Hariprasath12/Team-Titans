@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		{{> head title="Carbon Footprint - Reports"}}
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 	</head>
 	<body>
 		<div id="header">
@@ -9,24 +10,17 @@
 		</div>
 		<div id="content">
 		  	<div class="container">
-		  		<div class="points-container">
-		  			<h1>Points Stats</h1>
-			  		<div class="leaf-points">
-			  			<div class="points leaf">
-			  				<span class="label">1500</span><i class="fa fa-2x fa-leaf" aria-hidden="true"></i>
-			  			</div>
-			  			<div class="points tree">
-			  				<span class="label">1</span><i class="fa fa-2x fa-tree" aria-hidden="true"></i>
-			  			</div>
-			  		</div>
-			  		<hr/>
-			  		<div class="tree-container">
-			  			<h2>You can convert your points to a Tree</h2>
-			  			<video autoplay muted loop playsinline>
-			  				<source src="tree.mp4" type="video/mp4">
-			  			</video>
-			  		</div>
-			  	</div>
+		  		<div class="reports-container">
+		  			<h1>Reports</h1>
+
+		  			<h3>Monthly Carbon Emission & Carbon Saved Report</h3>
+		  			<canvas id="carbonEmissionChart"></canvas>
+
+		  			<canvas id="carbonSavedChart"></canvas>
+		  			<hr>
+		  			<h3>Leaf Points Report</h3>
+		  			<canvas id="leafChart"></canvas>
+		  		</div>
 		  	</div>
 		</div>
 		<div id="footer">
@@ -34,7 +28,138 @@
 		</div>
 		<script src="./dist/bundle.js"></script>
 		<script type="text/javascript">
+			var months = new Array();
+			months[0] = "January";
+			months[1] = "February";
+			months[2] = "March";
+			months[3] = "April";
+			months[4] = "May";
+			months[5] = "June";
+			months[6] = "July";
+			months[7] = "August";
+			months[8] = "September";
+			months[9] = "October";
+			months[10] = "November";
+			months[11] = "December";
+
+			var d = new Date();
+			var day = d.getDate().toString();
+			var month = months[d.getMonth()].toLowerCase();
+			var year = d.getFullYear().toString();
+
 			localStorage.setItem("commute", "{}");
+
+			// var fs = require('fs');
+			var my_tanso;
+			var carbon_emission_monthy_data = [];
+			var carbon_saved_monthy_data = [];
+			var leaf_points_monthly_data = [];
+
+			function loadJSON(callback) {
+			    var xobj = new XMLHttpRequest();
+			    xobj.overrideMimeType("application/json");
+			    xobj.open('GET', 'sample_data', true);
+			    xobj.onreadystatechange = function () {
+			    		// console.log(xobj.readyState);
+			    		// console.log(xobj.status);
+			          if (xobj.readyState == 4 && xobj.status == "200") {
+			          	// console.log(xobj);
+			            callback(xobj.responseText);
+			          }
+			    };
+			    xobj.send(null);  
+			 }
+
+			 loadJSON(function(response) {
+			    var my_tanso = JSON.parse(response);
+			    console.log(my_tanso);
+			    var commute_details = my_tanso.commute_details[year];
+			    // console.log(commute_details[months[0].toLowerCase()]);
+			    
+			    for(i=0; i<months.length; i++) {
+			    	console.log(commute_details[months[i].toLowerCase()]);
+			    	if(commute_details[months[i].toLowerCase()]) {
+			    		let carbon_stats = commute_details[months[i].toLowerCase()]["carbon_stats"];
+			    		carbon_emission_monthy_data.push(carbon_stats["carbon_emitted"]);
+			    		carbon_saved_monthy_data.push(carbon_stats["carbon_saved"]);
+			    		leaf_points_monthly_data.push(carbon_stats["leaf_points"]);
+			    	} else {
+			    		carbon_emission_monthy_data.push(0);
+			    		carbon_saved_monthy_data.push(0);
+			    		leaf_points_monthly_data.push(0);
+			    	}
+			    }
+
+			    buildCharts();
+			 });
+
+			function buildCharts() {
+				var ctx = document.getElementById('carbonEmissionChart').getContext('2d');
+				var chart = new Chart(ctx, {
+				    // The type of chart we want to create
+				    type: 'line',
+
+				    // The data for our dataset
+				    data: {
+				        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				        datasets: [
+				        	{
+					            label: 'Carbon Emission',
+					            backgroundColor: 'rgb(255, 99, 132)',
+					            borderColor: 'rgb(255, 99, 132)',
+					            data: carbon_emission_monthy_data
+				        	}
+				        ]
+				    },
+
+				    // Configuration options go here
+				    options: {}
+				});
+
+				var ctx1 = document.getElementById('carbonSavedChart').getContext('2d');
+				var chart1 = new Chart(ctx1, {
+				    // The type of chart we want to create
+				    type: 'line',
+
+				    // The data for our dataset
+				    data: {
+				        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				        datasets: [
+				        	{
+					            label: 'Carbon Saved',
+					            backgroundColor: 'rgb(34,139,34)',
+					            borderColor: 'rgb(34,139,34)',
+					            data: carbon_saved_monthy_data
+				        	}
+				        ]
+				    },
+
+				    // Configuration options go here
+				    options: {}
+				});
+
+				var ctx2 = document.getElementById('leafChart').getContext('2d');
+				var chart2 = new Chart(ctx2, {
+				    // The type of chart we want to create
+				    type: 'line',
+
+				    // The data for our dataset
+				    data: {
+				        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				        datasets: [
+				        	{
+					            label: 'Leaf Points',
+					            backgroundColor: 'rgb(34,139,34)',
+					            borderColor: 'rgb(34,139,34)',
+					            data: leaf_points_monthly_data
+				        	}
+				        ]
+				    },
+
+				    // Configuration options go here
+				    options: {}
+				});
+			}
 		</script>
 	</body>
 </html>

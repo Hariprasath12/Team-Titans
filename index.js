@@ -4,6 +4,7 @@ const compression = require('compression');
 const app     = express();
 var path = require('path');
 const imgDir = path.join(__dirname, 'img');
+var fs = require('fs');
 
 app.use(express.static(imgDir));
 
@@ -11,7 +12,12 @@ app.use(express.static(imgDir));
 app.set('view engine', 'hbs');
 app.set('views', './partials');
 
+var bodyParser = require('body-parser');
+// app.use(bodyParser.json()); // support json encoded bodies
+// app.use(bodyParser.json({ type: 'application/*+json' }))
+// app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+var jsonParser = bodyParser.json();
 
 let hbs = exphbs.create({
     extname: '.hbs', 
@@ -47,11 +53,31 @@ app.get('/', function (req, res) {
   app.get('/end', function (req, res) {
     res.render('end',{layout: false})
   })
+  app.get('/tree', function (req, res) {
+    res.render('tree',{layout: false})
+  })
   app.get('/profile', function (req, res) {
     res.render('profile',{layout: false})
   })
   app.get('/report', function (req, res) {
     res.render('report',{layout: false})
+  })
+  app.get('/sample_data', function (req, res) {
+    fs.readFile('sample_data.json', function(err, data) {
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.write(data);
+      res.end();
+    });
+  })
+  app.post('/sample_data', jsonParser, function (req, res) {
+    // console.log(req.body.tanso_data_details);
+    fs.writeFile("sample_data.json", req.body.tanso_data_details, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("The file was saved!");
+    });
+    res.end();
   })
   
 console.log('Magic happens on port 3000');
