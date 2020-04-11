@@ -23,7 +23,7 @@
 				<div class="commute-results-container">
 					<div id="carbon-saved-stats">
 				  		<div class="stats">
-				  			<h3>You have SAVED <span id="carbon-saved-commute">0</span> KG CO2 in this commute</h3>
+				  			<h3 id="carbon-saved-commute"></h3>
 				  		</div>
 				  	</div>
 					<div class="commute-results">
@@ -180,6 +180,10 @@
 	        	let mileage;
 	        	let leafPoints;
 	        	let rideLeafPoints = 0;
+	        	let fuelRequiredPerPerson;
+	        	let totalFuelRequired;
+
+	        	let carbonEmissionPerPerson;
 
 	        	if(ride == "bike") {
 	        		mileage = 50;
@@ -194,22 +198,24 @@
 	        		mileage = 5;
 	        		leafPoints = 20;
 	        	} else {
+	        		mileage = 50 // default taken for bike
 	        		leafPoints = 25;
 	        	}
 
 	        	
 	        	let totalOccupants = commute.count;
 	        	let carbonEmittedPerLitre;
-	        	if(ride == "bike") {
+	        	
+	        	if(ride == "bike" || ride == "walk" || ride == "cycle") { // default calc for bike
 	        		carbonEmittedPerLitre = 2.31;
 	        	} else {
 	        		carbonEmittedPerLitre = 2.68;
 	        	}
 
-	        	let fuelRequiredPerPerson = (dis/mileage);
-	        	let totalFuelRequired = ((dis/mileage)/totalOccupants);
+	        	fuelRequiredPerPerson = (dis/mileage);
+	        	totalFuelRequired = ((dis/mileage)/totalOccupants);
 
-	        	let carbonEmissionPerPerson = carbonEmittedPerLitre * fuelRequiredPerPerson;
+	        	carbonEmissionPerPerson = carbonEmittedPerLitre * fuelRequiredPerPerson;
 	        	let totalCarbonEmission;
 	        	let carbonSaved;
 
@@ -223,12 +229,16 @@
 	        	
 	        	
 	        	if(totalOccupants == 1) {
-	        		totalCarbonEmission = parseInt(carbonEmissionPerPerson.toFixed(2));
+	        		totalCarbonEmission = parseFloat(carbonEmissionPerPerson.toFixed(2));
 	        		rideLeafPoints = dis * 4;
 	        	} else {
-	        		totalCarbonEmission = parseInt((carbonEmittedPerLitre * totalFuelRequired).toFixed(2));
-	        		carbonSaved = parseInt((carbonEmissionPerPerson - totalCarbonEmission).toFixed(2));
+	        		totalCarbonEmission = parseFloat((carbonEmittedPerLitre * totalFuelRequired).toFixed(2));
+	        		carbonSaved = parseFloat((carbonEmissionPerPerson - totalCarbonEmission).toFixed(2));
 	        		rideLeafPoints = dis * 4 * leafPoints;
+	        	}
+
+	        	if(ride == "walk" || ride == "cycle") {
+	        		totalCarbonEmission = 0;
 	        	}
 
 	        	commute.totalCarbonEmission = totalCarbonEmission;
@@ -240,8 +250,8 @@
 	        	saveCommuteDetails(commute);
 
 	        	if(ride == "walk" || ride == "cycle") {
-	        		document.getElementById('carbon-emitted').innerHTML="Total Carbon Emitted in this commute: 0. Yay! You took a cabon free ride.";
-	        		document.getElementById('carbon-share').innerHTML="Carbon share per person: 0. Yay! You took a cabon free ride.";
+	        		document.getElementById('carbon-emitted').innerHTML="Total Carbon Emitted in this commute: 0 KG. Yay! You took a cabon free ride.";
+	        		document.getElementById('carbon-share').innerHTML="Carbon share per person: 0 KG.";
 	        	} else {
 	        		document.getElementById('carbon-emitted').innerHTML=`Total Carbon Emitted in this commute: ${totalCarbonEmission} KG`;
 	        		if(commute.count > 1) {
@@ -250,10 +260,15 @@
 	        			document.getElementById('carbon-share').innerHTML=`Carbon share per person: ${totalCarbonEmission} KG`;
 	        		}
 	        	}
-	        	document.getElementById('commute-distance').innerHTML=`Commute distance: ${Math.round(commute.distance)} Km`;
-	        	document.getElementById('commute-shared').innerHTML=`Commute shared with ${commute.count - 1} persons`;
-	        	document.getElementById('carbon-saved-commute').innerHTML=`${carbonSaved}`;
-	        	// document.getElementById('carbon-saved').innerHTML=`Carbon Saved: ${carbonSaved} KG`;
+	        	if(carbonSaved === 0) {
+	        		document.getElementById('carbon-saved-commute').innerHTML=`You Burned ${carbonSaved} KG CO2 in this commute`;
+	        	} else {
+	        		document.getElementById('carbon-saved-commute').innerHTML= "Great!" + "<br>" + "You have" + "<br>" + `SAVED ${carbonSaved}` +  "KG CO2" + "<br>" + "in this commute";
+	        	}
+	        	document.getElementById('commute-distance').innerHTML=`Commute distance: ${Math.round(commute.distance)} KM`;
+	        	if(commute.count > 1) {
+	        		document.getElementById('commute-shared').innerHTML=`Commute shared with ${commute.count - 1} persons`;
+	        	}
 	        	document.getElementById('ride-leaf-points').innerHTML=`Leaf Points Earned: ${rideLeafPoints}`;
 	        }
 
