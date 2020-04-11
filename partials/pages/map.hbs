@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	  {{> head title="Carbon Footprint - Happy Journey" map=true}}
+	  {{> head title="My Tanso - Happy Journey" map=true}}
 	</head>
 	 <style>
       /* Always set the map height explicitly to define the size of the div
@@ -16,7 +16,7 @@
         padding: 0;
       }
       #floating-panel {
-        width: 200px;
+        width: 250px;
         padding: 10px 0;
         position: absolute;
         top: 70px;
@@ -45,10 +45,9 @@
 		<div id="content">
       <div class="container">
 		  	 <div id="floating-panel">
-           <div id='from'>
-				   </div>
-				   <div id='to'>
-				   </div>
+           <p id='from'></p>
+				   <p id='to'></p>
+           <p id='distance'></p>
 				   <button onclick="end()">End Ride</button>
 			   </div>
 			   <div id="map-canvas"></div>
@@ -65,8 +64,9 @@
 			  // const urlParams = new URLSearchParams(queryString);
         const from = commute.start;
   		  const to = commute.end;
-  		  document.getElementById('from').innerHTML=`From:${from}`;
-  		  document.getElementById('to').innerHTML=`To:${to}`;
+  		  document.getElementById('from').innerHTML=`From: ${from.toUpperCase()}`;
+  		  document.getElementById('to').innerHTML=`To: ${to.toUpperCase()}`;
+        document.getElementById('distance').innerHTML=`Distance: ${Math.round(commute.distance)} Km`;
   		  const count = commute.count;
   		  const ride = commute.ride;
   		  const dis = commute.distance;
@@ -171,7 +171,7 @@
         }
 
     	  function end(){
-    		  	let url=`${window.location.origin}/end`;
+    		  	let url=`${window.location.origin}/end-ride`;
     	      window.location.replace(url);
     	  }
     </script>

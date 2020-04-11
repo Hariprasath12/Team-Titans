@@ -38,8 +38,8 @@ app.set('views', __dirname + '/partials/pages');
 app.get('/', function (req, res) {
     res.render('index',{layout: false})
   })
-  app.get('/self', function (req, res) {
-    res.render('self',{layout: false})
+  app.get('/own-vehicle', function (req, res) {
+    res.render('own-vehicle',{layout: false})
   })
   app.get('/shared-vehicle', function (req, res) {
     res.render('sharedVehicle',{layout: false})
@@ -50,8 +50,8 @@ app.get('/', function (req, res) {
   app.get('/map', function (req, res) {
     res.render('map',{layout: false})
   })
-  app.get('/end', function (req, res) {
-    res.render('end',{layout: false})
+  app.get('/end-ride', function (req, res) {
+    res.render('end-ride',{layout: false})
   })
   app.get('/tree', function (req, res) {
     res.render('tree',{layout: false})

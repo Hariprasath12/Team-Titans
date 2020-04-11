@@ -6,15 +6,15 @@
 			<span class="line line-3"></span>
 		</a>
 
-		<h1>Carbon Footprint</h1>
+		<h1>My Tanso</h1>
 	</div>
 
 	<div id="navigation">
 		<div class="profile-image-and-name">
 			<div class="image">
-				<i class="fa fa-3x fa-user-o" aria-hidden="true"></i>
+				<i class="fa fa-4x fa-user-o" aria-hidden="true"></i>
 			</div>
-			<h3>David Jones</h3>
+			<h1>David<br>Jones</h1>
 		</div>
 		<hr/>
 		<div class="leaf-points">
@@ -50,6 +50,7 @@
 
 	 loadJSON(function(response) {
 	    var my_tanso = JSON.parse(response);
+	    //console.log(my_tanso);
 	    document.getElementById("leaf-points").innerHTML = Math.round(my_tanso.total_carbon_stats.total_leaf_points);
 	    if(document.getElementById("leafPoints")) {
 	    	document.getElementById("leafPoints").innerHTML = Math.round(my_tanso.total_carbon_stats.total_leaf_points);

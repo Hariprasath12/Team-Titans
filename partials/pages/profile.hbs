@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	  {{> head title="Carbon Footprint - Profile"}}
+	  {{> head title="My Tanso - Profile"}}
 	</head>
 	<body>
 		<div id="header">
@@ -26,14 +26,17 @@
 		  				</div>
 		  			</div>
 		  			<hr/>
-		  			<div id="carbon-saved-stats">
+		  			<!-- <div id="carbon-saved-stats">
 			  			<div class="stats">
 			  				<div class="icon">
 			  					<i class="fa fa-5x fa-cloud" aria-hidden="true"></i>
 			  					<h2>CO2</h2>
 			  				</div>
-			  				<h3><span id="carbon-saved-profile">0</span> KG CO2 SAVED</h3>
+			  				<h3><span id="carbon-saved-profile">0</span> KG CO2<br>SAVED</h3>
 			  			</div>
+			  		</div> -->
+			  		<div id="recent-commutes">
+			  			<h3>Recent Commutes</h3>
 			  		</div>
 		  		</div>
 		  	</div>
@@ -42,5 +45,110 @@
 			{{> bottomNav}}
 		</div>
 		<script src="./dist/bundle.js"></script>
+		<script type="text/javascript">
+			var months = new Array();
+			months[0] = "January";
+			months[1] = "February";
+			months[2] = "March";
+			months[3] = "April";
+			months[4] = "May";
+			months[5] = "June";
+			months[6] = "July";
+			months[7] = "August";
+			months[8] = "September";
+			months[9] = "October";
+			months[10] = "November";
+			months[11] = "December";
+
+			var d = new Date();
+			var day = d.getDate().toString();
+			var month = months[d.getMonth()].toLowerCase();
+			var year = d.getFullYear().toString();
+
+			function loadSampleData(callback) {
+			    var xobj = new XMLHttpRequest();
+			    xobj.overrideMimeType("application/json");
+			    xobj.open('GET', 'sample_data', true);
+			    xobj.onreadystatechange = function () {
+			          if (xobj.readyState == 4 && xobj.status == "200") {
+			            callback(xobj.responseText);
+			          }
+			    };
+			    xobj.send(null);  
+			 }
+
+			 loadSampleData(function(response) {
+			 	var my_tanso = JSON.parse(response);
+
+				var daily_commute_details = my_tanso["commute_details"][year][month]["daily_commute_details"];
+				// console.log(Object.keys(daily_commute_details));
+
+				var commute_days = Object.keys(daily_commute_details);
+
+				var recentCommutesDiv = document.getElementById("recent-commutes");
+
+				for(i=commute_days.length-1; i>=0; i--) {
+					var commutes = daily_commute_details[commute_days[i]]["commutes"];
+					// console.log(commutes);
+					for(j=commutes.length-1;j>=0;j--) {
+						console.log(commutes[j]);
+
+						var commuteDiv = document.createElement("div");
+						var transitDiv = document.createElement("div");
+						var carbonDiv = document.createElement("div");
+						if(commutes[j].transit === "self") {
+							var p1 = document.createElement("P");
+							var textnode1 = document.createTextNode("Transit mode: Own Vehicle" + "(" + commutes[j].ride + ")");
+							p1.appendChild(textnode1);
+							transitDiv.appendChild(p1);
+						} else {
+							var p1 = document.createElement("P");
+							var textnode1 = document.createTextNode("Transit mode: " + commutes[j].transit + "(" + commutes[j].ride + ")");
+							p1.appendChild(textnode1);
+							transitDiv.appendChild(p1);
+						}
+
+						var p2 = document.createElement("p");
+						var textnode2 = document.createTextNode("Route: " + commutes[j].start.toUpperCase() + " - " + commutes[j].end.toUpperCase());
+						p2.appendChild(textnode2);
+						transitDiv.appendChild(p2);
+
+						var p3 = document.createElement("p");
+						var textnode3 = document.createTextNode("Distance: " + Math.round(commutes[j].distance) + "Km");
+						p3.appendChild(textnode3);
+						transitDiv.appendChild(p3);
+
+						var p4 = document.createElement("p");
+						var textnode4 = document.createTextNode("Passenger count: " + commutes[j].count);
+						p4.appendChild(textnode4);
+						transitDiv.appendChild(p4);
+						
+						var p5 = document.createElement("p");
+						var textnode5 = document.createTextNode("Carbon emitted: " + commutes[j].totalCarbonEmission.toFixed(2) + " Kg");
+						p5.appendChild(textnode5);
+						carbonDiv.appendChild(p5);
+
+						var p6 = document.createElement("p");
+						var textnode6 = document.createTextNode("Carbon saved: " + commutes[j].carbonSaved.toFixed(2) + " Kg");
+						p6.appendChild(textnode6);
+						carbonDiv.appendChild(p6);
+
+						var p7 = document.createElement("p");
+						var textnode7 = document.createTextNode("Leaf points: " + commutes[j].rideLeafPoints);
+						p7.appendChild(textnode7);
+						carbonDiv.appendChild(p7);
+
+						commuteDiv.classList.add('commute');
+						transitDiv.classList.add('transit-details');
+						carbonDiv.classList.add('carbon-details');
+
+						commuteDiv.appendChild(transitDiv);
+						commuteDiv.appendChild(carbonDiv);
+
+						recentCommutesDiv.appendChild(commuteDiv);
+					}
+				}
+			});
+		</script>
 	</body>
 </html>

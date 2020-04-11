@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{{> head title="Carbon Footprint - Ride Stats" map=true}}
+		{{> head title="My Tanso - Ride Stats" map=true}}
 		<style type="text/css">
 			.map-container {
 				height: 100%;
@@ -21,19 +21,18 @@
 					</div>
 				</div>
 				<div class="commute-results-container">
+					<div id="carbon-saved-stats">
+				  		<div class="stats">
+				  			<h3>You have SAVED <span id="carbon-saved-commute">0</span> KG CO2 in this commute</h3>
+				  		</div>
+				  	</div>
 					<div class="commute-results">
-				  		<h3>Hope you had a Nice Journey!</h3>
-					  	<div id="from">
-					  	</div>
-						<div id="to">
-						</div>
-						<div id="carbon-emitted">
-						</div>
-						<div id="carbon-saved">
-						</div>
-						<div id="leaf-points">
-							
-						</div>
+						<h3>Commute Summary</h3>
+						<p id="commute-distance"></p>
+						<p id="commute-shared"></p>
+						<p id="carbon-emitted"></p>
+						<p id="carbon-share"></p>
+						<p id="ride-leaf-points"></p>
 					</div>
 				</div>
 			</div>
@@ -61,11 +60,11 @@
 			    to = commute.end;
 
 			    count = commute.count;
-			    ride= commute.ride;
-			    dis= commute.distance;
+			    ride = commute.ride;
+			    dis = Math.round(commute.distance);
 
-			    document.getElementById('from').innerHTML=`From: ${from.toUpperCase()}`;
-			    document.getElementById('to').innerHTML=`To: ${to.toUpperCase()}`;
+			    // document.getElementById('from').innerHTML=`From: ${from.toUpperCase()}`;
+			    // document.getElementById('to').innerHTML=`To: ${to.toUpperCase()}`;
 			}
 
 		    var months = new Array();
@@ -224,11 +223,11 @@
 	        	
 	        	
 	        	if(totalOccupants == 1) {
-	        		totalCarbonEmission = carbonEmissionPerPerson;
+	        		totalCarbonEmission = parseInt(carbonEmissionPerPerson.toFixed(2));
 	        		rideLeafPoints = dis * 4;
 	        	} else {
-	        		totalCarbonEmission = carbonEmittedPerLitre * totalFuelRequired;
-	        		carbonSaved = carbonEmissionPerPerson - totalCarbonEmission;
+	        		totalCarbonEmission = parseInt((carbonEmittedPerLitre * totalFuelRequired).toFixed(2));
+	        		carbonSaved = parseInt((carbonEmissionPerPerson - totalCarbonEmission).toFixed(2));
 	        		rideLeafPoints = dis * 4 * leafPoints;
 	        	}
 
@@ -241,12 +240,21 @@
 	        	saveCommuteDetails(commute);
 
 	        	if(ride == "walk" || ride == "cycle") {
-	        		document.getElementById('carbon-emitted').innerHTML="Carbon Emitted: 0. Yay! You took a cabon free ride.";
+	        		document.getElementById('carbon-emitted').innerHTML="Total Carbon Emitted in this commute: 0. Yay! You took a cabon free ride.";
+	        		document.getElementById('carbon-share').innerHTML="Carbon share per person: 0. Yay! You took a cabon free ride.";
 	        	} else {
-	        		document.getElementById('carbon-emitted').innerHTML=`Carbon Emitted: ${totalCarbonEmission} KG`;
+	        		document.getElementById('carbon-emitted').innerHTML=`Total Carbon Emitted in this commute: ${totalCarbonEmission} KG`;
+	        		if(commute.count > 1) {
+	        			document.getElementById('carbon-share').innerHTML=`Carbon share per person: ${(totalCarbonEmission / commute.count).toFixed(2)} KG`;
+	        		} else {
+	        			document.getElementById('carbon-share').innerHTML=`Carbon share per person: ${totalCarbonEmission} KG`;
+	        		}
 	        	}
-	        	document.getElementById('carbon-saved').innerHTML=`Carbon Saved: ${carbonSaved} KG`;
-	        	document.getElementById('leaf-points').innerHTML=`Leaf Points Earned: ${rideLeafPoints}`;
+	        	document.getElementById('commute-distance').innerHTML=`Commute distance: ${Math.round(commute.distance)} Km`;
+	        	document.getElementById('commute-shared').innerHTML=`Commute shared with ${commute.count - 1} persons`;
+	        	document.getElementById('carbon-saved-commute').innerHTML=`${carbonSaved}`;
+	        	// document.getElementById('carbon-saved').innerHTML=`Carbon Saved: ${carbonSaved} KG`;
+	        	document.getElementById('ride-leaf-points').innerHTML=`Leaf Points Earned: ${rideLeafPoints}`;
 	        }
 
 	        if(commute) {
