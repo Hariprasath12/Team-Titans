@@ -71,7 +71,7 @@
   		  const ride = commute.ride;
   		  const dis = commute.distance;
 
-        var subscriptionKey = 'Nza85gIRM42J_9HX9kpHwT2ngY-cSobd0o5IZTM8kBs';
+        var subscriptionKey = '<SUB_KEY>'; // replace with subscription key from azure
         var subscriptionKeyCredential = new atlas.service.SubscriptionKeyCredential(subscriptionKey);
         var pipeline = atlas.service.MapsURL.newPipeline(subscriptionKeyCredential, {
           retryOptions: { maxTries: 4 } // Retry options
